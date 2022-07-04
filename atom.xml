@@ -1,0 +1,1608 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://chenmi.online/blog/</id>
+    <title>晨米酱的Blog</title>
+    <updated>2022-07-04T03:06:47.926Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://chenmi.online/blog/"/>
+    <link rel="self" href="https://chenmi.online/blog/atom.xml"/>
+    <subtitle>个人博客</subtitle>
+    <logo>https://chenmi.online/blog/images/avatar.png</logo>
+    <icon>https://chenmi.online/blog/favicon.ico</icon>
+    <rights>All rights reserved 2022, 晨米酱的Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[有关 Date 的解析]]></title>
+        <id>https://chenmi.online/blog/post/20220704/</id>
+        <link href="https://chenmi.online/blog/post/20220704/">
+        </link>
+        <updated>2022-07-04T03:06:42.000Z</updated>
+        <summary type="html"><![CDATA[<p>javascript的 Date 参考了早期 java.utils.Date，但是自身提供的api接口不是很多，实际使用时需要自己进行封装或者使用现成的时间库</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>javascript的 Date 参考了早期 java.utils.Date，但是自身提供的api接口不是很多，实际使用时需要自己进行封装或者使用现成的时间库</p>
+<!-- more -->
+<h2 id="基本使用">基本使用</h2>
+<p>浏览器控制台打印 Date 可以得到两种形式的方法，一是绑定在 Date 上的静态方法，一是继承的方法</p>
+<h3 id="dateparse-dateutc-和-datenow">Date.parse()、Date.UTC() 和 Date.now()</h3>
+<p>Date.parse() 可以解析满足结构的时间字符串，返回毫秒数<br>
+Date.UTC() 可以解析满足如形如：Date.UTC(2022,7,3,22,0)，返回毫秒数<br>
+Date.now() 返回当前时间的毫秒数</p>
+<p>创建一个Date实例 ( new Date ) 会根据参数类型和个数隐式调用上面三个函数中的一个</p>
+<h3 id="继承的方法">继承的方法</h3>
+<p><img src="https://chenmi.online/blog//post-images/1656857242798.png" alt="图1" loading="lazy"><br>
+<img src="https://chenmi.online/blog//post-images/1656857230147.png" alt="图2" loading="lazy"></p>
+<h2 id="时间库使用">时间库使用</h2>
+<h3 id="dayjs-时间库">Day.js 时间库</h3>
+<blockquote>
+<p>Fast 2kB alternative to Moment.js with the same modern API<br>
+All API operations that change the Day.js object will return a new instance instead</p>
+</blockquote>
+<p>使用感悟：体积小，插件式便于扩展，结果独立，链式调用</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[在 Webpack 写一个 Loader]]></title>
+        <id>https://chenmi.online/blog/post/20220702/</id>
+        <link href="https://chenmi.online/blog/post/20220702/">
+        </link>
+        <updated>2022-07-02T11:56:24.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="前言">前言</h2>
+<p>有的时候，你可能在从零搭建 <code>Webpack</code> 项目很熟悉，配置过各种 <code>loader</code> ，面试官在 <code>Webpack</code> 方面问你，是否自己实现过一个<code>loader</code> ？如果没有去了解过如果去实现，确实有点尴尬，其实呢，<code>loader</code> 实现其实很简单的。下面说下 <code>loader</code> 是什么？</p>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="前言">前言</h2>
+<p>有的时候，你可能在从零搭建 <code>Webpack</code> 项目很熟悉，配置过各种 <code>loader</code> ，面试官在 <code>Webpack</code> 方面问你，是否自己实现过一个<code>loader</code> ？如果没有去了解过如果去实现，确实有点尴尬，其实呢，<code>loader</code> 实现其实很简单的。下面说下 <code>loader</code> 是什么？</p>
+<!-- more -->
+<blockquote>
+<p>为什么需要Loader?</p>
+</blockquote>
+<p>Webpack 它只能处理 js 和 JSON 文件。面对 css 文件还有一些图片等等，Webpack 它自己是不能够处理的，它需要loader 处理其他类型的文件并将它们转换为有效的模块以供应用程序使用并添加到依赖关系图中</p>
+<blockquote>
+<p>Loader是什么？</p>
+</blockquote>
+<p>loader本质上是一个node模块，符合Webpack中一切皆模块的思想。由于它是一个 node 模块，它必须导出一些东西。loader本身就是一个函数，在该函数中对接收到的内容进行转换，然后返回转换后的结果</p>
+<p>下面为你简单介绍下webpack中的loader</p>
+<h2 id="常见的loader">常见的loader</h2>
+<p>我们先来回顾下常见的 Loader 基础的配置和使用吧（仅仅只是常见的，npm上面开发者大佬们发布的太多了）</p>
+<p>那么开始吧，首先先介绍 处理 CSS 相关的 Loader</p>
+<h3 id="css-loader-和-style-loader">css-loader 和 style-loader</h3>
+<ul>
+<li>安装依赖</li>
+</ul>
+<pre><code class="language-bash">npm install css-loader style-loader -D
+</code></pre>
+<ul>
+<li>使用加载器</li>
+</ul>
+<pre><code class="language-js">module.exports = {
+    // ...
+    module: {
+        rules: [{
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader'],
+        }],
+    },
+}；
+</code></pre>
+<p>其中module.rules代表模块的处理规则。每个规则可以包含很多配置项</p>
+<p>test 可以接收正则表达式或元素为正则表达式的数组。只有与正则表达式匹配的模块才会使用此规则。在此示例中，/.css$/ 匹配所有以 .css 结尾的文件</p>
+<p>use 可以接收一个包含规则使用的加载器的数组。如果只配置了一个css-loader，当只有一个loader时也可以为字符串</p>
+<p>css-loader 的作用只是处理 CSS 的各种加载语法（@import 和 url() 函数等），如果样式要工作，则需要 style-loader 将样式插入页面</p>
+<p>style-loader加到了css-loader前面，这是因为在Webpack打包时是按照数组从后往前的顺序将资源交给loader处理的，因此要把最后生效的放在前面</p>
+<ul>
+<li>还可以这样写成对象的形式，里面options传入配置</li>
+</ul>
+<pre><code class="language-js">module.exports = {
+    // ...
+    module: {
+        rules: [{
+            test: /\.css$/,
+            use: [
+                'style-loader',
+                  {
+                    loader: 'css-loader',
+                    options: {
+                        // css-loader 配置项
+                 },
+               }
+            ],
+        }],
+    },
+}；
+</code></pre>
+<blockquote>
+<p>exclude与include<br>
+include代表该规则只对正则匹配到的模块生效<br>
+exclude的含义是，所有被正则匹配到的模块都排除在该规则之外</p>
+</blockquote>
+<pre><code class="language-js">rules: [
+    {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+        exclude: /node_modules/,
+        include: /src/,
+    }
+],
+</code></pre>
+<p>是否都还记得呢，现在有现成的脚手架，很多人都很少自己去配置这些了，欸~当然还有相关的 sass/less等等预处理器loader这里就不一一介绍了。</p>
+<h3 id="babel-loader">babel-loader</h3>
+<p>babel-loader 这个loader十分的重要，把高级语法转为ES5，常用于处理 ES6+ 并将其编译为 ES5。它允许我们在项目中使用最新的语言特性（甚至在提案中），而无需特别注意这些特性在不同平台上的兼容性。</p>
+<ul>
+<li>介绍下主要的三个模块</li>
+</ul>
+<ol>
+<li>babel-loader：使 Babel 与 Webpack 一起工作的模块</li>
+<li>@babel/core：Babel核心模块。</li>
+<li>@babel/preset-env：是Babel官方推荐的preseter，可以根据用户设置的目标环境，自动添加编译ES6+代码所需的插件和补丁</li>
+</ol>
+<ul>
+<li>安装</li>
+</ul>
+<pre><code class="language-bash">npm install babel-loader @babel/core @babel/preset-env -D
+</code></pre>
+<ul>
+<li>配置</li>
+</ul>
+<pre><code class="language-js">rules: [
+  {
+    test: /\.js$/,
+    exclude: /node_modules/, //排除掉，不排除拖慢打包的速度
+    use: {
+      loader: 'babel-loader',
+      options: {
+        cacheDirectory: true, // 启用缓存机制以防止在重新打包未更改的模块时进行二次编译
+        presets: [[
+          'env', {
+            modules: false, // 将ES6 Module的语法交给Webpack本身处理
+          }
+        ]],
+      },
+    },
+  }
+],
+</code></pre>
+<h3 id="html-loader">html-loader</h3>
+<p>Webpack 可不认识 html，直接报错，需要loader转化</p>
+<p>html-loader 用于将 HTML 文件转换为字符串并进行格式化，它允许我们通过 JS 加载一个 HTML 片段</p>
+<ul>
+<li>安装</li>
+</ul>
+<pre><code class="language-bash">npm install html-loader -D
+</code></pre>
+<ul>
+<li>配置</li>
+</ul>
+<pre><code class="language-js">rules: [
+    {
+        test: /\.html$/,
+        use: 'html-loader',
+    }
+],
+
+// index.js
+import otherHtml from './other.html';
+document.write(otherHtml);
+</code></pre>
+<p>这样你可以在js中加载另一个页面，写刀当前index.html里面</p>
+<h3 id="file-loader">file-loader</h3>
+<p>用于打包文件类型的资源，比如对png、jpg、gif等图片资源使用file-loader，然后就可以在JS中加载图片了</p>
+<ul>
+<li>安装</li>
+</ul>
+<pre><code class="language-bash">npm install file-loader -D
+</code></pre>
+<ul>
+<li>配置</li>
+</ul>
+<pre><code class="language-js">const path = require('path');
+module.exports = {
+    entry: './index.js',
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.js',
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: 'file-loader',
+            }
+        ],
+    },
+}；
+</code></pre>
+<h3 id="url-loader">url-loader</h3>
+<p>既然介绍了 file-loader 就不得不介绍 url-loader，它们很相似，但是唯一的区别是用户可以设置文件大小阈值。大于阈值时返回与file-loader相同的publicPath，小于阈值时返回文件base64编码。</p>
+<ul>
+<li>安装</li>
+</ul>
+<pre><code class="language-bash">npm install url-loader -D
+</code></pre>
+<ul>
+<li>配置</li>
+</ul>
+<pre><code class="language-js">rules: [
+    {
+        test: /\.(png|jpg|gif)$/,
+        use: {
+            loader: 'url-loader',
+            options: {
+                limit: 1024,
+                name: '[name].[ext]',
+                publicPath: './assets/',
+            },
+        },
+    }
+],
+</code></pre>
+<h3 id="ts-loader">ts-loader</h3>
+<p>TypeScript使用得越来越多，对于我们平时写代码有了更好的规范，项目更加利于维护...等等好处，我们也在Webpack中来配置loader,本质上类似于 babel-loader，是一个连接 Webpack 和 Typescript 的模块</p>
+<ul>
+<li>安装</li>
+</ul>
+<pre><code class="language-bash">npm install ts-loader typescript
+</code></pre>
+<ul>
+<li>loader配置，主要的配置还是在 tsconfig.json 中</li>
+</ul>
+<pre><code class="language-js">rules: [
+    {
+        test: /\.ts$/,
+        use: 'ts-loader',
+    }
+],
+</code></pre>
+<h3 id="vue-loader">vue-loader</h3>
+<p>用来处理vue组件,还要安装vue-template-compiler来编译Vue模板，估计大家大部分都用脚手架了</p>
+<ul>
+<li>安装</li>
+</ul>
+<pre><code class="language-bash">npm install  vue-loader  vue-template-compiler -D
+</code></pre>
+<pre><code class="language-js">rules: [
+    {
+        test: /\.vue$/,
+        use: 'vue-loader',
+    }
+],
+</code></pre>
+<h2 id="写一个简单的loader">写一个简单的Loader</h2>
+<p>介绍了几个常见的loader的安装配置，我们在具体的业务的实现的时候，可能遇到各种需求，上面介绍的或者npm上都没有的加载器都不适合当前的业务场景，那我们可以自己去实现一个自己的loader来满足自己的需求，下面介绍一下如何自定义一个loader</p>
+<ol>
+<li>初始化项目</li>
+</ol>
+<ul>
+<li>初始化项目<br>
+先创建一个项目文件夹（名字可以随意，当然肯定是英文名）后进行初始化</li>
+</ul>
+<pre><code class="language-bash">npm init -y
+</code></pre>
+<ul>
+<li>安装依赖<br>
+安装依赖： Webpack 和 Webpack脚手架 和 热更新服务器</li>
+</ul>
+<p>不同的版本 Webpack 可能有些差异，如果你跟着我的这个例子写的话，建议和我装一样的版本</p>
+<pre><code class="language-js">npm install webpack@4.39.2 webpack-cli@3.3.6 webpack-dev-server@3.11.0 -D
+</code></pre>
+<ul>
+<li>新建一个index.html文件<br>
+dist/index.html</li>
+</ul>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;zh-CN&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot; /&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+        &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot; /&gt;
+        &lt;title&gt;&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;script src=&quot;./bundle.js&quot;&gt;&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<ul>
+<li>新建一个入口文件 index.js 文件<br>
+src/index.js</li>
+</ul>
+<pre><code class="language-js">document.write('hello world')
+</code></pre>
+<ul>
+<li>创建 webpack.config.js 配置文件<br>
+配置出口和入口文件</li>
+</ul>
+<p>配置devServer服务</p>
+<pre><code class="language-js">const path = require('path')
+
+module.exports = {
+    entry: './src/index.js',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js',
+    },
+    devServer: {
+        contentBase: './dist',
+        overlay: {
+            warnings: true,
+            errors: true,
+        },
+        open: true,
+    },
+}
+</code></pre>
+<ul>
+<li>在 package.json 中配置启动命令</li>
+</ul>
+<pre><code class="language-js">  &quot;scripts&quot;: {
+    &quot;dev&quot;: &quot;Webpack-dev-server&quot;
+  },
+</code></pre>
+<ul>
+<li>启动 npm run dev<br>
+devServer帮我们启动一个服务器，每次修改index.js不需要自己在去打包，而是自动帮我们完成这项任务</li>
+</ul>
+<p>页面内容就是我们index.js编写的内容被打包成在dist/bundle.js引入到index.html了</p>
+<ul>
+<li>当前目录结构</li>
+</ul>
+<pre><code class="language-vim">Webpack-demo
+ ├── dist
+ │   └── index.html
+ ├── package-lock.json
+ ├── package.json
+ ├── src
+ │   └── index.js
+ └── Webpack.config.js
+</code></pre>
+<ol start="2">
+<li>实现一个简单的 loader</li>
+</ol>
+<ul>
+<li>在 src/MyLoader/my-loader.js</li>
+</ul>
+<pre><code class="language-js">module.exports = function (source) {
+    // 在这里按照你的需求处理 source
+    return source.replace('word', ', I am Xiaolang')
+}
+</code></pre>
+<p>返回其它结果 this.callback</p>
+<pre><code class="language-js">this.callback(    
+    // 当无法转换原内容时，给 Webpack 返回一个 Error   
+    err: Error | null,    
+    // 原内容转换后的内容    
+    content: string | Buffer,    
+    // 用于把转换后的内容得出原内容的 Source Map，方便调试
+    sourceMap?: SourceMap,    
+    // 如果本次转换为原内容生成了 AST 语法树，可以把这个 AST 返回,以方便之后需要 AST 的 Loader 复用该 AST，以避免重复生成 AST，提升性能 
+    abstractSyntaxTree?: AST
+);
+</code></pre>
+<p>打开代码对应的source-map，方便调试源代码。source-map 可以方便实际开发者在浏览器控制台查看源代码。如果不处理source-map，最终将无法生成正确的map文件，在浏览器的开发工具中可能会看到混乱的源代码。</p>
+<p>为了在使用 this.callback 返回内容时将 source-map 返回给 Webpack</p>
+<p>loader 必须返回 undefined 让 Webpack 知道 loader 返回的结果在 this.callback 中，而不是在 return</p>
+<pre><code class="language-js">module.exports = function(source) { 
+    // 通过 this.callback 告诉 Webpack 返回的结果
+    this.callback(null, source.replace('word', ', I am Xiaolang'), sourceMaps);   
+    return;
+};
+</code></pre>
+<ul>
+<li>常用加载本地 loader 的两种方式</li>
+</ul>
+<blockquote>
+<p>使用 path.resolve 指向这个本地文件</p>
+</blockquote>
+<pre><code class="language-js">const path = require('path')
+
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                use: path.resolve('./src/myLoader/my-loader.js'),
+            },
+        ],
+    },
+}
+</code></pre>
+<blockquote>
+<p>先去 node_modules 项目下寻找 my-loader，如果找不到，会再去 ./src/myLoader/ 目录下寻找</p>
+</blockquote>
+<pre><code class="language-js">module.exports = {
+ //...
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                use: ['my-loader'],
+            },
+        ],
+    },
+    resolveLoader: {
+        modules: ['node_modules', './src/myLoader'],
+    },
+}
+</code></pre>
+<p>一个 loader的职责是单一的，使每个loader易维护。</p>
+<p>如果源文件需要分多步转换才能正常使用，通过多个Loader进行转换。当调用多个loader进行文件转换时，每个loader都会链式执行。</p>
+<p>第一个loader会得到要处理的原始内容，将前一个loader处理的结果传递给下一个。处理完毕，最终的Loader会将处理后的最终结果返回给 Webpack</p>
+<p>所以，当你写loader记得保持它的职责单一，你只关心输入和输出。</p>
+<ol start="3">
+<li>option 参数</li>
+</ol>
+<pre><code class="language-js">module: {
+    rules: [
+        {
+            test: /\.js$/,
+            use: [
+                {
+                    loader: 'my-loader',
+                    options: {
+                        flag: true,
+                    },
+                },
+            ],
+        },
+    ],
+},
+</code></pre>
+<p>那么我们如何在loader中获取这个写入配置信息呢？</p>
+<p>Webpack 提供了loader-utils工具</p>
+<ul>
+<li>在之前写的loader修改</li>
+</ul>
+<pre><code class="language-js">const loaderUtils = require('loader-utils')
+module.exports = function (source) {
+    // 获取到用户给当前 Loader 传入的 options
+    const options = loaderUtils.getOptions(this)
+    console.log('options--&gt;', options)
+    // 在这里按照你的需求处理 source
+    return source.replace('word', ', I am Xiaolang')
+}
+</code></pre>
+<p>控制台也打印了出来<br>
+4. 缓存<br>
+如果为每个构建重新执行重复的转换操作，这样Webpack构建可能会变得非常慢。</p>
+<p>Webpack 默认会缓存所有loader的处理结果，也就是说，当待处理的文件或者依赖的文件没有变化时，不会再次调用对应的loader进行转换操作</p>
+<pre><code class="language-js">module.exports = function (source) {
+    // 开始缓存
+    this.cacheable &amp;&amp; this.cacheable();
+    // 在这里按照你的需求处理 source
+    return source.replace('word', ', I am Xiaolang')
+}
+</code></pre>
+<p>一般默认开启缓存，如果不想Webpack这个loader进行缓存，也可以关闭缓存</p>
+<pre><code class="language-js">module.exports = function (source) {
+    // 关闭缓存
+    this.cacheable(false);
+    // 在这里按照你的需求处理 source
+    return source.replace('word', ', I am Xiaolang')
+}
+</code></pre>
+<ol start="5">
+<li>同步和异步<br>
+在某些情况下，转换步骤只能异步完成。</li>
+</ol>
+<p>例如，您需要发出网络请求以获取结果。如果使用同步方式，网络请求会阻塞整个构建，导致构建非常缓慢。</p>
+<pre><code class="language-js">module.exports = function(source) {    
+    // 告诉 Webpack 本次转换是异步的，Loader 会在 callback 中回调结果
+    var callback = this.async()
+    // someAsyncOperation 代表一些异步的方法
+    someAsyncOperation(source, function (err, result, sourceMaps, ast) {
+        // 通过 callback 返回异步执行后的结果
+        callback(err, result, sourceMaps, ast)
+    })
+};
+</code></pre>
+<ol start="6">
+<li>处理二进制数据<br>
+默认情况下，Webpack 传递给 Loader 的原始内容是一个 UTF-8 格式编码的字符串。但是在某些场景下，加载器处理的不是文本文件，而是二进制文件</li>
+</ol>
+<p>官网例子 通过 exports.raw 属性告诉 Webpack 该 Loader 是否需要二进制数据</p>
+<pre><code class="language-js">module.exports = function(source) {    
+    // 在 exports.raw === true 时，Webpack 传给 Loader 的 source 是 Buffer 类型的    
+    source instanceof Buffer === true;    
+    // Loader 返回的类型也可以是 Buffer 类型的    
+    // 在 exports.raw !== true 时，Loader 也可以返回 Buffer 类型的结果    
+    return source;
+};
+// 通过 exports.raw 属性告诉 Webpack 该 Loader 是否需要二进制数据 
+module.exports.raw = true;
+</code></pre>
+<ol start="7">
+<li>实现一个渲染markdown文档loader</li>
+</ol>
+<ul>
+<li>安装依赖 md 转 html 的依赖，当然可以选择另外一个模块 marked<br>
+我这里使用的 markdown-it</li>
+</ul>
+<pre><code class="language-bash">npm install markdown-it@12.0.6 -D 
+</code></pre>
+<ul>
+<li>辅助工具 用来添加 div 和 class</li>
+</ul>
+<pre><code class="language-js">module.exports = function ModifyStructure(html) {
+    // 把h3和h2开头的切成数组
+    const htmlList = html.replace(/&lt;h3/g, '$*(&lt;h3').replace(/&lt;h2/g, '$*(&lt;h2').split('$*(')
+
+    // 给他们套上 .card 类名的 div
+    return htmlList
+        .map(item =&gt; {
+            if (item.indexOf('&lt;h3') !== -1) {
+                return `&lt;div class=&quot;card card-3&quot;&gt;${item}&lt;/div&gt;`
+            } else if (item.indexOf('&lt;h2') !== -1) {
+                return `&lt;div class=&quot;card card-2&quot;&gt;${item}&lt;/div&gt;`
+            }
+            return item
+        })
+        .join('')
+}
+</code></pre>
+<ul>
+<li>新建一个loader<br>
+/src/myLoader/md-loader.js</li>
+</ul>
+<pre><code class="language-js">const { getOptions } = require('loader-utils')
+const MarkdownIt = require('markdown-it')
+const beautify = require('./beautify')
+module.exports = function (source) {
+    const options = getOptions(this) || {}
+    const md = new MarkdownIt({
+        html: true,
+        ...options,
+    })
+    let html = beautify(md.render(source))
+    html = `module.exports = ${JSON.stringify(html)}`
+    this.callback(null, html)
+}
+</code></pre>
+<p>这样loader也写完了，this.callback(null, html) 和 return 在这里差不多哈。</p>
+<pre><code class="language-js">html = `module.exports = ${JSON.stringify(html)}`
+</code></pre>
+<p>这里解析的结果是一个 HTML 字符串。如果直接返回，也会面临Webpack无法解析模块的问题。正确的做法是把这个HTML字符串拼接成一段JS代码。</p>
+<p>这时候我们要返回的代码就是通过module.exports导出这个HTML字符串，这样外界在导入模块的时候就可以接收到这个HTML字符串。</p>
+<ul>
+<li>然后在webpack.config.js使用这个加载器</li>
+</ul>
+<pre><code class="language-js">const path = require('path')
+
+module.exports = {
+    entry: './src/index.js',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js',
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                use: [
+                    {
+                        loader: 'my-loader',
+                        options: {
+                            flag: true,
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.md$/,
+                use: [
+                    {
+                        loader: 'md-loader',
+                    },
+                ],
+            },
+        ],
+    },
+    resolveLoader: {
+        modules: ['node_modules', './src/myLoader'],
+    },
+    devServer: {
+        contentBase: './dist',
+        overlay: {
+            warnings: true,
+            errors: true,
+        },
+        open: true,
+    },
+}
+</code></pre>
+<ul>
+<li>最后在index.js中加载一个md文件，我这里随便整个，新建github的readme.md</li>
+</ul>
+<pre><code class="language-js">document.write('hello word')
+
+import mdHtml from './test.md'
+const content = document.createElement('div')
+content.className = 'content'
+content.innerHTML = mdHtml
+document.body.appendChild(content)
+</code></pre>
+<ul>
+<li>目录结构</li>
+</ul>
+<pre><code class="language-vim">Webpack-demo
+ ├── dist
+ │   └── index.html
+ ├── package-lock.json
+ ├── package.json
+ ├── src
+ │   ├── index.js
+ │   ├── myLoader
+ │   │   ├── beautify.js
+ │   │   ├── md-loader.js
+ │   │   └── my-loader.js
+ │   └── test.md
+ └── webpack.config.js
+</code></pre>
+<blockquote>
+<p>github仓库地址：https://github.com/LianTianNo1/webpack-loader-demo</p>
+</blockquote>
+<h2 id="结语">结语</h2>
+<p>感谢大家能看到这里哈~ ，现在打包构建工具也慢慢增多了vue-cli，vite等等，但是 webpack 仍然有一席之地，很多值得学习的地方，继续努力学习~~</p>
+<p>原文地址：<a href="https://juejin.cn/post/7100534685134454815">https://juejin.cn/post/7100534685134454815</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[如何在 HTML 中使用 Preload 和 Prefetch 来加载资源]]></title>
+        <id>https://chenmi.online/blog/post/20220629/</id>
+        <link href="https://chenmi.online/blog/post/20220629/">
+        </link>
+        <updated>2022-06-29T01:24:27.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="介绍">介绍</h3>
+<p>在页面上加载资源是实现 Web 最佳性能和无缝用户体验的重要方式。一般来说，网页会加载多个 CSS、字体、JavaScript 和图片文件。这些资源默认是渲染阻塞(render-blocking)，会降低加载性能。</p>
+<p>在本文中，你将学到一个称为资源提示(resource hints)的新功能，例如 preload 和 prefetch 。使用这种方式可以克服渲染阻塞。</p>
+<h2 id="前提条件">前提条件</h2>
+<p>本文基于 Google Chrome 版本 86.0.4240.80 构建</p>
+<h2 id="第一步理解渲染阻塞">第一步：理解渲染阻塞</h2>
+<p>当对资源的请求处于渲染阻塞状态时，这意味着在该请求完成之前不会触发 <code>window.onload</code> 事件。在现代单页应用程序中，大多数资源（如 CSS 和 JavaScript 文件以及图像）都依赖此事件才能开始处理，这意味着在渲染阻塞请求完成加载之前，部分 UI 不会开始渲染或显示在屏幕上。</p>
+<p>要查看实际效果，可以创建一个 HTML 文件：</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+      &lt;link rel=&quot;stylesheet&quot; href='https://fonts.googleapis.com/css?family=Roboto:400,600|Material+Icons'&gt;
+      &lt;style&gt;
+        p { font-family: Roboto; }
+      &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+      &lt;p&gt; Hello &lt;/p&gt;
+      &lt;script&gt;
+        window.onload = function () {
+            console.log('Loaded');
+        }
+      &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>在 Chrome 中打开这个 HTML 文件。接下来，打开开发人员工具并选择网络。选择慢速 3G 的连接，然后重新加载页面。</p>
+<p>加载 CSS 文件后，控制台会立即记录 Loaded 消息，如下图所示：<br>
+<img src="https://chenmi.online/blog//post-images/1656467110254.png" alt="no-preload" loading="lazy"></p>
+<p>在构建和加载大型网站时，CSS 和 JavaScript 以及其他资源可能需要很长时间才能加载完成。因此，CSS 样式可能不会立即显示。这时，选择预加载资源可以消除这种影响并阻止延迟加载。</p>
+<h2 id="第二步预加载资源">第二步：预加载资源</h2>
+<p>为了阻止默认的渲染阻塞并确保字体和 CSS 等资源在页面生命周期的早期开始加载，此时就需要实现预加载。 <code>rel=&quot;preload&quot; </code> 用于预加载资源。它可以应用于多种文件格式，包括 CSS、JS、字体、图像等。根据预加载的文件类型，可能还需要包含相应的 <code>as</code> 属性以及 <code>rel=&quot;preload&quot;</code>。对于 CSS，<code>as=</code> 需要设置为 <code>&quot;style&quot;</code>。对于 <code>JavaScript</code>，<code>as=</code> 需要设置为 <code>&quot;script&quot;</code>。<br>
+修改上面的 HTML 文件的 <code>&lt;link&gt;</code>。设置 <code>rel=&quot;preload&quot;</code>。添加 <code>as=&quot;style&quot;</code>：</p>
+<pre><code class="language-html">&lt;head&gt;
+    &lt;link
+      rel=&quot;preload&quot;
+      as=&quot;style&quot;
+      href='https://fonts.googleapis.com/css?family=Roboto:400,600|Material+Icons'&gt;
+    &lt;style&gt;
+      html {
+        font-family: Roboto;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;
+</code></pre>
+<p>这时会看到在 CSS 请求开始之前显示了 <code>Loaded</code> 日志，如下图所示：<br>
+<img src="https://chenmi.online/blog//post-images/1656471492148.png" alt="preload" loading="lazy"></p>
+<p>但是，你可能注意到 CSS 样式尚未应用于页面。那是因为使用 <code>preload</code> 或 <code>prefetch</code> 只会获取资源，但不会应用它。相反，预加载和预抓取会将资源保留在内存中。因此必须定义在什么时候加载资源。</p>
+<p>由于 <code>onload</code> 解决方案依赖于 JavaScript，因此添加包含 <code>&lt;link&gt;</code> 标签的 <code>&lt;noscript&gt;</code> 标签，并设置 <code>rel=&quot;stylesheet&quot;</code>：</p>
+<pre><code class="language-html">&lt;link
+  rel=&quot;preload&quot;
+  as=&quot;style&quot;
+  onload=&quot;this.rel = 'stylesheet'&quot;
+  href='https://fonts.googleapis.com/css?family=Roboto:100,900|Material+Icons'&gt;
+&lt;noscript&gt;
+  &lt;link
+    rel=&quot;stylesheet&quot;
+    href='https://fonts.googleapis.com/css?family=Roboto:400,600|Material+Icons'&gt;
+&lt;/noscript&gt;
+</code></pre>
+<p>这样可以确保在 JavaScript 被禁用或加载失败时显示字体。</p>
+<h2 id="第三步预抓取资源">第三步：预抓取资源</h2>
+<p>预抓取的原理和预加载类似。不同点在于，当预抓取资源时，浏览器认为该资源是低优先级的，这意味着资源将稍后加载。因此，预抓取通常是用来实现最初不需要但稍后使用的资源。</p>
+<p>要实现 prefectching，设置 <code>rel=&quot;prefetching&quot;</code> ：</p>
+<pre><code class="language-html">&lt;link
+  rel=&quot;prefetch&quot;
+  as=&quot;style&quot;
+  onload=&quot;this.rel = 'stylesheet'&quot;
+  href='https://fonts.googleapis.com/css?family=Roboto:100,900|Material+Icons'&gt;
+</code></pre>
+<p>预抓取和预加载 CSS 有助于提高 Web 性能。</p>
+<h2 id="第四步预加载-javascript">第四步：预加载 JavaScript</h2>
+<p>预加载 JavaScript 资源的方式有些不同。下面的例子取自<a href="https://developers.google.com/web/updates/2016/03/link-rel-preload">关于预加载的谷歌开发者文章</a>：</p>
+<pre><code class="language-html">&lt;link rel=&quot;preload&quot; href=&quot;used-later.js&quot; as=&quot;script&quot;&gt;
+&lt;!-- ... --&gt;
+&lt;script&gt;
+  var usedLaterScript = document.createElement('script');
+  usedLaterScript.src = 'used-later.js';
+  document.body.appendChild(usedLaterScript);
+&lt;/script&gt;
+</code></pre>
+<p>这里重要的一步是设置标签的 src 属性并将其插入到 DOM 中。</p>
+<p>原文地址：<a href="https://www.digitalocean.com/community/tutorials/html-preload-prefetch">https://www.digitalocean.com/community/tutorials/html-preload-prefetch</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[webpack -- 版本5配置]]></title>
+        <id>https://chenmi.online/blog/post/2022062202/</id>
+        <link href="https://chenmi.online/blog/post/2022062202/">
+        </link>
+        <updated>2022-06-22T08:26:17.000Z</updated>
+        <summary type="html"><![CDATA[<p>下面是一个完整的<code>webpack.config.js</code>配置案例</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>下面是一个完整的<code>webpack.config.js</code>配置案例</p>
+<!-- more -->
+<pre><code class="language-js">/* 引入webpack及配置合并函数 */
+const webpack = require(&quot;webpack&quot;);
+/* Webpack4 =&gt; Webpack5 */
+// const merge = require(&quot;webpack-merge&quot;);
+const { merge } = require(&quot;webpack-merge&quot;);
+/* 引入本地输出路径 */
+const path = require(&quot;path&quot;);
+const { srcPath, distPath, wwwPath } = require(&quot;./path&quot;);
+/* 引入通用配置对象（等待合并） */
+const commonConf = require(&quot;./webpack.common.js&quot;);
+/* 引入各种功能插件 */
+const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;);
+/* Webpack4 =&gt; Webpack5 */
+// output : { clean: true }
+const { CleanWebpackPlugin } = require(&quot;clean-webpack-plugin&quot;);
+const TerserPlugin = require(&quot;terser-webpack-plugin&quot;);
+const MiniCssExtractPlugin = require(&quot;mini-css-extract-plugin&quot;);
+/* Webpack4 =&gt; Webpack5 */
+// const OptimizeCssAssetsPlugin = require(&quot;optimize-css-assets-webpack-plugin&quot;);
+const CssMinimizerPlugin = require(&quot;css-minimizer-webpack-plugin&quot;);
+
+module.exports = {
+    /* 输出模式 */
+    // mode: &quot;development&quot;,
+    mode: &quot;production&quot;,
+    /* 入口文件 每个入口文件对应着一棵依赖树 */
+    entry: {
+        index: path.join(srcPath, &quot;js&quot;, &quot;index.js&quot;),
+        other: path.join(srcPath, &quot;js&quot;, &quot;other.js&quot;),
+    },
+    /* bundle输出位置 */
+    /* dev */
+    // output: {
+    //     filename: &quot;[name].[hash].js&quot;, // 打包代码时，加上 hash 戳
+    //     path: distPath,
+    // },
+
+    /* prod */
+    output: {
+        filename: &quot;[name].[contenthash:8].js&quot;, // 打包代码时，加上 hash 戳
+        path: wwwPath,
+        // 如果有CDN
+        // publicPath: 'http://cdn.abc.com'
+        // 异步chunk输出位置
+        chunkFilename: &quot;async/[id].js&quot;,
+    },
+    /* 使用不同【loader+具体配置】去编译加载不同【源码模块】 */
+    module: {
+        rules: [
+            /* common */
+            {
+                // 找到所有的js文件
+                test: /\.js$/, // 使用babel-loader做ES高级语法向ES5的转换
+
+                use: [&quot;babel-loader&quot;] /* 以下两个只需要写一个 */,
+
+                // 查找范围仅限于src目录
+                include: srcPath,
+                exclude: /node_modules/,
+            },
+            // 开发环境下CSS的配置
+            {
+                test: /\.css$/,
+                // loader 的执行顺序是：从后往前
+                /* 
+                postcss.config.js中的配置
+                module.exports = {
+                    plugins: [require(&quot;autoprefixer&quot;)],
+                };
+                */
+                use: [&quot;style-loader&quot;, &quot;css-loader&quot;, &quot;postcss-loader&quot;],
+            },
+            /* Webpack4 =&gt; Webpack5 */
+            /* 关于asset详见：https://webpack.docschina.org/guides/asset-modules/ */
+            // {
+            //     test: /\.(png|jpg|jpeg|gif)$/,
+            //     use: [
+            //         {
+            //             loader: &quot;file-loader&quot;,
+            //             options: {},
+            //         },
+            //     ],
+            // },
+            {
+                // 图片的转化
+                test: /\.(jpe?g|png|gif|bmp)$/i,
+                type: &quot;asset/resource&quot;,
+            },
+            // scss开发环境
+            {
+                test: /\.scss$/, // 增加 'less-loader' ，注意顺序
+                use: [
+                    &quot;style-loader&quot;,
+                    &quot;css-loader&quot;,
+                    &quot;sass-loader&quot;,
+                    &quot;postcss-loader&quot;,
+                ],
+            },
+            /* prod */
+            /* Webpack4 =&gt; Webpack5 */
+            /* 关于asset详见：https://webpack.docschina.org/guides/asset-modules/ */
+            // {
+            //     test: /\.(png|jpg|jpeg|gif)$/,
+            //     use: {
+            //         loader: &quot;url-loader&quot;,
+            //         options: {
+            //             // 小于 5kb 的图片用 base64 格式产出
+            //             // 否则，依然延用 file-loader 的形式，产出 url 格式
+            //             limit: 5 * 1024,
+            //             // 打包到 img 目录下
+            //             outputPath: &quot;img/&quot;,
+            //             // 不一定以ESM模块形式去引入
+            //             // 不要看到源代码中未以ESM模块形式去引入a.png 就给哥tree-shaking掉（html中可能以src形式引用）
+            //             esModule: false,
+            //         },
+            //     },
+            // },
+            {
+                // 图标的转化
+                test: /\.(woff|woff2|eot|ttf|otf|svg)$/i,
+                type: &quot;asset/resource&quot;,
+            },
+            {
+                // 图片的转化
+                test: /\.(jpe?g|png|gif|bmp)$/i,
+                // type: &quot;asset/resource&quot;,
+                // type: &quot;asset/inline&quot;,
+                // 自动切换resource与inline
+                type: &quot;asset&quot;,
+                parser: {
+                    dataUrlCondition: {
+                        maxSize: 8192, // 8kb
+                    },
+                },
+            },
+            // 生产环境下CSS配置
+            // 抽离 css
+            {
+                test: /\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    &quot;css-loader&quot;,
+                    &quot;postcss-loader&quot;,
+                ],
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    &quot;css-loader&quot;,
+                    &quot;sass-loader&quot;,
+                    &quot;postcss-loader&quot;,
+                ],
+            },
+        ],
+    },
+    plugins: [
+        /* common */
+        new HtmlWebpackPlugin({
+            template: `html-withimg-loader!${path.join(srcPath, &quot;index.html&quot;)}`,
+            filename: &quot;index.html&quot;,
+            minify: {
+                collapseWhitespace: true,
+                keepClosingSlash: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeScriptTypeAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                useShortDoctype: true,
+            },
+            chunks: [&quot;index&quot;, &quot;common&quot;],
+        }),
+        new HtmlWebpackPlugin({
+            template: `html-withimg-loader!${path.join(
+                srcPath,
+                &quot;views&quot;,
+                &quot;other.html&quot;
+            )}`,
+            filename: &quot;other.html&quot;,
+            minify: {
+                collapseWhitespace: true,
+                keepClosingSlash: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeScriptTypeAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                useShortDoctype: true,
+            },
+            chunks: [&quot;other&quot;, &quot;common&quot;, &quot;vendor&quot;],
+        }),
+        /* dev */
+        new webpack.DefinePlugin({
+            // 相当于window.ENV = 'production'
+            ENV: JSON.stringify(&quot;development&quot;),
+        }),
+        // 会默认清空 output.path 文件夹
+        new CleanWebpackPlugin(),
+        /* prod */
+        // 抽离 css 文件
+        new MiniCssExtractPlugin({
+            filename: &quot;css/[name].[contenthash:8].css&quot;,
+        }),
+        new webpack.DefinePlugin({
+            ENV: JSON.stringify(&quot;production&quot;),
+        }),
+        new CleanWebpackPlugin(),
+    ],
+
+    /* dev */
+    devServer: {
+        hot: true, // 热更新
+        port: 8000, // 测试服务器端口
+        open: true, // 自动打开浏览器
+        compress: true, // 启动 gzip 压缩
+        proxy: {
+            &quot;/api&quot;: {
+                target: &quot;http://localhost:9000/api&quot;,
+                changeOrigin: true,
+                ws: true,
+                pathRewrite: {
+                    &quot;^/api&quot;: &quot;&quot;,
+                },
+            },
+        },
+    },
+
+    /* prod */
+    optimization: {
+        /* Webpack4 =&gt; Webpack5 */
+        // minimizer: [
+        //     new TerserPlugin(), 
+        //     new OptimizeCssAssetsPlugin({})
+        // ],
+        usedExports: true, //只导出被使用的模块
+        minimize: true, // 启动压缩
+        concatenateModules: true,
+        minimizer: [
+            new TerserPlugin(),
+            // new OptimiazeCssAssetPlugin(),
+            new CssMinimizerPlugin(),
+        ],
+
+        splitChunks: {
+            // 同步异步都使用分包
+            chunks: &quot;all&quot;,
+            cacheGroups: {
+                // 第三方模块
+                vendor: {
+                    name: &quot;vendor&quot;, // chunk 名称
+                    priority: 1, // 权限更高的优先抽离，重要！！！
+                    test: /[\\/]node_modules[\\/]/,
+                    minSize: 0, // 大小限制
+                    minChunks: 1, // 最少复用过几次
+                },
+                // 公共的模块
+                common: {
+                    name: &quot;common&quot;, // chunk 名称
+                    test:/[\\/]src[\\/]utils[\\/]/
+                    priority: 2, // 优先级
+                    minSize: 0, // 公共模块的大小限制
+                    minChunks: 1, // 公共模块最少复用过几次
+                },
+            },
+        },
+    },
+};
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[webpack -- 版本4配置]]></title>
+        <id>https://chenmi.online/blog/post/2022062201/</id>
+        <link href="https://chenmi.online/blog/post/2022062201/">
+        </link>
+        <updated>2022-06-22T00:54:50.000Z</updated>
+        <summary type="html"><![CDATA[<p>下面是一个完整的<code>webpack.config.js</code>配置案例</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>下面是一个完整的<code>webpack.config.js</code>配置案例</p>
+<!-- more -->
+<pre><code class="language-js">/* 引入各种功能插件 */
+const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;);
+const { CleanWebpackPlugin } = require(&quot;clean-webpack-plugin&quot;);
+const TerserPlugin = require(&quot;terser-webpack-plugin&quot;);
+const OptimizeCssAssetsPlugin = require(&quot;optimize-css-assets-webpack-plugin&quot;);
+const MiniCssExtractPlugin = require(&quot;mini-css-extract-plugin&quot;);
+
+module.exports = {
+    /* 打包模式（生产模式下会自动开启Tree-Shaking） */
+    mode: &quot;development&quot;,
+    // mode: &quot;production&quot;,
+
+    /* 入口JS文件 每个入口文件对应着一棵依赖树 */
+    entry: {
+        index: &quot;../src/js/index.js&quot;,
+        other: &quot;../src/js/other.js&quot;,
+    },
+
+    /* bundle输出位置 */
+    /* dev */
+    output: {
+        // 根据js文件内容不同 生成不同的哈希(签名算法) 用于判断是否应该重新下载该文件
+        filename: &quot;[name].[hash8].js&quot;, 
+        // bundle输出文件夹
+        path: disPath,
+    },
+
+    /* prod */
+    // output: {
+    //     filename: &quot;[name].[contenthash:8].js&quot;, // 打包代码时，加上 hash 戳
+    //     path: wwwPath,
+
+    //     // 如果有CDN
+    //     // publicPath: 'http://cdn.abc.com'
+
+    //     // 异步chunk输出位置 以流水号命名
+    //     chunkFilename: &quot;async/[id].js&quot;,
+    // },
+
+    /* 使用不同【loader+具体配置】去编译加载不同【源码模块】 */
+    module: {
+        rules: [
+            /* common */
+            /* 编译加载JS模块 */
+            {
+                // 找到所有的js文件
+                test: /\.js$/, // 使用babel-loader做ES高级语法向ES5的转换
+                use: [&quot;babel-loader&quot;] /* 以下两个只需要写一个 */,
+                // 查找范围仅限于src目录
+                include: &quot;../src&quot;,
+                // 不查找node_modules目录
+                exclude: /node_modules/,
+            },
+
+            /* dev */
+            /* 编译加载图片模块 */
+            // {
+            //     test: /\.(png|jpg|jpeg|gif)$/,
+            //     use: [
+            //         {
+            //             loader: &quot;file-loader&quot;,
+            //             options: {},
+            //         },
+            //     ],
+            // },
+
+            // 开发环境下CSS的配置
+            /* 编译加载CSS模块 */
+            // {
+            //     test: /\.css$/,
+            //     // loader 的执行顺序是：从后往前
+            //     /* 
+            //     postcss.config.js中的配置
+            //     module.exports = {
+            //         plugins: [require(&quot;autoprefixer&quot;)],
+            //     };
+            //     */
+            //     use: [&quot;style-loader&quot;, &quot;css-loader&quot;, &quot;postcss-loader&quot;],
+            // },
+
+            // scss开发环境
+            /* 编译加载SCSS模块 */
+            // {
+            //     test: /\.scss$/, // 增加 'less-loader' ，注意顺序
+            //     use: [
+            //         &quot;style-loader&quot;,
+            //         &quot;css-loader&quot;,
+            //         &quot;sass-loader&quot;,
+            //         &quot;postcss-loader&quot;,
+            //     ],
+            // },
+
+            /* prod */
+            /* 编译加载图片模块 */
+            // 考虑 base64 编码的情况
+            {
+                test: /\.(png|jpg|jpeg|gif)$/,
+                use: {
+                    loader: &quot;url-loader&quot;,
+                    options: {
+                        // 小于 5kb 的图片用 base64 格式产出
+                        // 否则，依然延用 file-loader 的形式，产出 url 格式
+                        limit: 1 * 1024,
+                        // 输出到bundle根目录下的img文件夹
+                        outputPath: &quot;img/&quot;,
+                        // 不一定以ESM模块形式去引入
+                        // 不要看到源代码中未以ESM模块形式去引入a.png 就给哥tree-shaking掉（html中可能以src形式引用）
+                        esModule: false,
+                    },
+                },
+            },
+
+            /* 编译加载CSS模块 */
+            // 抽离css
+            {
+                test: /\.css$/,
+                use: [
+                    // 将样式统一提取到独立的CSS文件
+                    MiniCssExtractPlugin.loader,
+                    // 加载CSS文件
+                    &quot;css-loader&quot;,
+                    // 先对C3的样式定义加必要的浏览器兼容前缀
+                    &quot;postcss-loader&quot;,
+                ],
+            },
+
+            /* 编译加载SCSS模块 */
+            {
+                test: /\.scss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    &quot;css-loader&quot;,
+                    // 将SCSS编译为CSS
+                    &quot;sass-loader&quot;,
+                    &quot;postcss-loader&quot;,
+                ],
+            },
+        ],
+    },
+
+    plugins: [
+        /* common */
+        /* 为html文件注入自动识别hash后缀的能力 */
+        new HtmlWebpackPlugin({
+            // 令html识别原始的&lt;img src=&quot;xxx&quot;/&gt;
+            template: `html-withimg-loader!${path.join(srcPath, &quot;index.html&quot;)}`,
+            filename: &quot;index.html&quot;,
+            // 压缩选项
+            minify: {
+                collapseWhitespace: true,
+                keepClosingSlash: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeScriptTypeAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                useShortDoctype: true,
+            },
+            // 需要依赖的具体chunk
+            chunks: [&quot;index&quot;, &quot;common&quot;],
+        }),
+        new HtmlWebpackPlugin({
+            template: `html-withimg-loader!${path.join(srcPath, &quot;views&quot;, &quot;other.html&quot;)}`,
+            filename: &quot;other.html&quot;,
+            minify: {
+                collapseWhitespace: true,
+                keepClosingSlash: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeScriptTypeAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                useShortDoctype: true,
+            },
+            chunks: [&quot;other&quot;, &quot;common&quot;, &quot;vendor&quot;],
+        }),
+
+        /* dev */
+        /* 定义全局变量 */
+        new webpack.DefinePlugin({
+            // 相当于定义全局变量const ENV = 'production'
+            ENV: JSON.stringify(&quot;development&quot;),
+        }),
+
+        // 会默认清空 output.path 文件夹
+        new CleanWebpackPlugin(),
+
+        /* prod */
+        // 抽离css文件到css目录下
+        new MiniCssExtractPlugin({
+            filename: &quot;css/[name].[contenthash:8].css&quot;,
+        }),
+        new webpack.DefinePlugin({
+            ENV: JSON.stringify(&quot;production&quot;),
+        }),
+    ],
+
+    /* dev */
+    /* 
+    开发服务器（生产环境下使用Nginx）
+    1. 跨域代理
+    2. 模块热更新（hot modudle replacement）
+     */
+    devServer: {
+        hot: true, // 热更新
+        port: 8000, // 测试服务器端口
+        open: true, // 自动打开浏览器
+        compress: true, // 启动 gzip 压缩
+        /* 跨域代理 */
+        proxy: {
+            &quot;/api&quot;: {
+                target: &quot;http://localhost:9000/api&quot;,
+                changeOrigin: true,
+                // webpack-dev-server通过websocket协议与浏览器的内核服务器保持长连接
+                ws: true,
+                // 覆盖/api为卵都没有
+                pathRewrite: {
+                    &quot;^/api&quot;: &quot;&quot;,
+                },
+            },
+        },
+    },
+
+    /* prod */
+    /* 性能优化选项 */
+    optimization: {
+        /* 压缩JS与CSS */
+        minimizer: [
+            new TerserPlugin(),
+            new OptimizeCssAssetsPlugin({})
+        ],
+        /* 分包配置 */
+        splitChunks: {
+            // 同步异步都使用分包
+            // initial 只考虑同步引入 import xxx from &quot;path&quot;
+            // async   只考虑异步引入 const About = import(path)
+            // all     同步异步都考虑
+            chunks: &quot;all&quot;,
+            /* 拆包配置 */
+            cacheGroups: {
+                // 第三方模块统一拆到vender.js中
+                vendor: {
+                    name: &quot;vendor&quot;, // chunk 名称
+                    priority: 1, // 权限更高的优先抽离，重要！！！
+                    test: /node_modules/,
+                    minSize: 0, // 大小限制
+                    minChunks: 1, // 最少复用过几次
+                },
+                // utils下的轮子统一拆到common.js中
+                common: {
+                    name: &quot;common&quot;, // chunk 名称
+                    priority: 0, // 优先级
+                    test: /src\/utils/,
+                    minSize: 0, // 公共模块的大小限制
+                    minChunks: 1, // 公共模块最少复用过几次
+                },
+            },
+        },
+    },
+};
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[webpack -- 初识]]></title>
+        <id>https://chenmi.online/blog/post/20220622/</id>
+        <link href="https://chenmi.online/blog/post/20220622/">
+        </link>
+        <updated>2022-06-21T23:48:24.000Z</updated>
+        <summary type="html"><![CDATA[<p>webpack定义：前端工程的打包构建工具</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>webpack定义：前端工程的打包构建工具</p>
+<!-- more -->
+<h2 id="打包原理">打包原理</h2>
+<ul>
+<li>今日之前端工程都是模块化的，A引用B,B又引用CD,CD又分别引用DEF和HIJ，最后形成一棵庞大的<code>依赖树</code></li>
+<li>Webpack从入口文件开始顺藤摸瓜，将一整棵依赖树都连根拔起，然后逐节点地编译处理为浏览器能直接识别的代码，并按执行顺序汇总打包到一个JS文件中（当然也可以根据具体不同配置进行分包）</li>
+</ul>
+<h2 id="说说何为module-何为chunk-何为bundle">说说何为module、何为chunk、何为bundle？</h2>
+<ul>
+<li>module即源代码模块。可以是JS/TS/dts/JSX，CSS/SASS/LESS/STYLUS,Vue，各种图片文件，json/xml等数据文件，等等</li>
+<li>bundle是最终输出的包，你会发现源代码模块一大堆，最终输出的包通常就寥寥几个JS文件和CSS文件，外加那么一两个静态资源文件夹</li>
+<li>chunk翻译过来叫块，从源码模块到最终包的打包过程中，你可以自由地将不同模块做整合与拆分，形成的就是块</li>
+</ul>
+<p><code>bundle指的是产出包的整体，chunk是bundle的组成部分</code></p>
+<h2 id="为什么要拆分重组呢">为什么要拆分重组呢？</h2>
+<ol>
+<li>为了最大化复用；例如组件库、Vue/React框架、常用的轮子、node_modules里的东西，更新频率极低，组织在一起就没必要每次升级时都重新下载</li>
+<li>为了提升性能；例如业务代码，更新频率非常高，组织为一个chunk，其体积通常较小（你能写出1M文字出来吗），每次升级时重新下载这一点点东西即可，性能高</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【Linux系统管理】文件管理]]></title>
+        <id>https://chenmi.online/blog/post/20220621/</id>
+        <link href="https://chenmi.online/blog/post/20220621/">
+        </link>
+        <updated>2022-06-21T06:42:30.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="系统须知">系统须知</h2>
+<pre><code># ip a		//查看IP
+# ifup ens33 	//启动网卡，临时获取一个IP
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://chenmi.online/blog//post-images/1655794503471.png" alt="" loading="lazy"></figure>
+<pre><code>快捷键操作
+tab键     //补全命令或者补全文件路径
+ctrl + c  //结束命令
+ctrl + l  //清屏
+ctrl + a  //定义命令的光标到首行
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="系统须知">系统须知</h2>
+<pre><code># ip a		//查看IP
+# ifup ens33 	//启动网卡，临时获取一个IP
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://chenmi.online/blog//post-images/1655794503471.png" alt="" loading="lazy"></figure>
+<pre><code>快捷键操作
+tab键     //补全命令或者补全文件路径
+ctrl + c  //结束命令
+ctrl + l  //清屏
+ctrl + a  //定义命令的光标到首行
+</code></pre>
+<!-- more -->
+<h2 id="命令写法">命令写法</h2>
+<pre><code>命令 【空格】选项 【空格】  文件/目录
+
+//选项可有可无，但是选项不同，命令的功能也不同
+
+命令帮助：
+--help
+man           //按q退出
+# touch --help
+# man touch
+</code></pre>
+<h2 id="目录结构">目录结构</h2>
+<pre><code>Windows： 多根方式  C:   D:
+
+Linux:   单根       /
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://www.runoob.com/wp-content/uploads/2014/06/d0c50-linux2bfile2bsystem2bhierarchy.jpg" alt="img" loading="lazy"></figure>
+<pre><code>bin     存放命令  -  普通用户的命令
+boot	linux启动内核文件
+dev		存放设备
+etc		存放系统配置文件
+home	存放普通用户的家目录
+root	超级管理员root的家
+sbin	存放命令  -   管理员用户的命令
+tmp		临时目录
+var     动态信息，内存，进程
+</code></pre>
+<pre><code>绝对路径：   以根 / 开始
+
+相对路径：  相对当前目录开始
+</code></pre>
+<p>怎么去切换目录：</p>
+<pre><code># cd           //切换目录
+.      //当前目录
+..     //上一级目录
+</code></pre>
+<p>练习： 切换目录操作</p>
+<figure data-type="image" tabindex="3"><img src="https://chenmi.online/blog//post-images/1655794626102.png" alt="" loading="lazy"></figure>
+<pre><code># mkdir -p /{a/e/f/g,b/{h,j},c}
+1、请使用绝对路径切换到目录g     cd /a/e/f/g
+2、请使用相对路径切换到a        cd ../../..
+3、请使用绝对路径切换到c        cd /c
+4、请使用相对路径切换到b        cd ../b   
+5、请使用相对路径切换到h        cd ./h  ~ cd h
+</code></pre>
+<pre><code># yum install tree -y         //安装tree命令
+# tree /a /b /c
+/a
+└── e
+    └── f
+        └── g
+/b
+├── h
+└── j
+/c
+
+5 directories, 0 files
+
+</code></pre>
+<h2 id="文件管理">文件管理</h2>
+<pre><code>文件增删改查
+增：
+touch   //创建文件
+# touch a.txt
+
+删：
+rm      //删除
+-r   //删除目录
+-f   //强制删除，非交互
+# rm -rf a.txt 
+
+改：
+mv		//移动和改名
+cp		//复制
+vi/vim  //编辑文件内容
+
+# touch a.txt
+# mv a.txt b.txt       //把a.txt改名为b.txt
+# mv b.txt /tmp/		//把b.txt移动到/tmp目录下
+# cp a.txt b.txt        //复制a.txt为b.txt
+
+查：
+cat		//查看所有内容
+-n	//加上行号
+head 	//默认是查看文件的前10行
+tail    //默认是查看文件的后10行
+
+
+目录增删改查 
+增：
+mkdir	//创建目录
+-p	//创建联级目录
+-v  //显示创建过程
+
+删：
+rm		//删除
+-r	//删除目录一定要加上该选项
+
+改：
+mv		//移动和改名
+cp		//复制
+-r  //复制目录一定要加上-r的选项
+
+查：
+ls	 	//列出目录有哪些内容
+-l	//以长格式显示
+-a	//显示隐藏文件
+-d	//配合-l  去查看目录本身信息以长格式显示
+
+# ls -l    等于  ll
+（开头第一个符号的含义）
+d  目录
+-  文件
+l  链接文件
+b  设备文件
+
+
+</code></pre>
+<h2 id="vivim编辑器">vi/vim编辑器</h2>
+<pre><code># yum install vim -y          //最小化系统，默认没有vim命令
+</code></pre>
+<p>三种模式</p>
+<p>命令模式--编辑模式--尾行模式<br>
+<img src="https://chenmi.online/blog//post-images/1655794695226.png" alt="" loading="lazy"></p>
+<pre><code>命令模式：
+1、光标定位
+0	//光标定位到该行的行首
+$   //光标定位到该行的行尾
+gg	//光标定位到第一行的行首
+G   //光标定位到最后一行的行首
+5gg ~ 5G //把光标定位到第5行的行首
+
+
+2、内容处理（以行为单位）
+yy	//复制光标所在行
+2yy //复制2行，包括光标所在行
+p	//粘贴，粘贴到光标所在的下一行
+dd 	//删除，删除光标所在行
+3dd	//删除3行，包含光标所在行往下
+u	//撤销
+ctrl + r  //反撤销
+
+3、高亮关键字
+/关键字
+按n往下翻，按N往上翻
+
+</code></pre>
+<pre><code>编辑模式：
+按i进入编辑模式 - 从光标的前面开始插入内容
+按a进入编辑模式 - 从光标的后面开始插入内容
+按o进入编辑模式 - 另起一行开始插入
+</code></pre>
+<pre><code>尾行模式：
+:wq		//保存退出  :x   shift+zz
+:q      //不保存退出
+加上  ！ 代表强制
+
+1、替换修改内容
+:1 s/root/ROOT/g           //替换第一行里面所有的root为 ROOT
+:1,5 s/root/ROOT/			//替换1到5行里面出来的第一个root为ROOT
+:% s/root/ROOT/g			//替换所有行里面出现所有root为ROOT
+(匹配的内容支持正则匹配)
+:% s/[0-9]//g				//删除所有行里面的数字，替换为空=删除
+
+2、功能
+: set number			//添加行号
+: set list				//列出所有字符
+</code></pre>
+<pre><code>可视块模式：
+批量添加：
+ctrl + v   -&gt;   方向键选中块  -&gt; 大写的i （shift + i）  -&gt; 输入添加的内容  -&gt; Esc Esc键
+批量删除：
+ctrl + v   -&gt;   方向键选中块  -&gt;  d 或者 x 进行删除
+
+shift + v  //可视行
+v          //可视 （不规则）
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[假如手机锁屏密码忘记了怎么办？]]></title>
+        <id>https://chenmi.online/blog/post/20220620/</id>
+        <link href="https://chenmi.online/blog/post/20220620/">
+        </link>
+        <updated>2022-06-20T11:53:47.000Z</updated>
+        <summary type="html"><![CDATA[<p>今天(2022-06-20)发生了一件很不可思议的事情，我的vivo手机锁屏密码忘记了，还好我还记得vivo账号，在官网上找到解决办法：<code>备份资料，重置手机</code>。这样感觉确实达到想要的效果，但是没法备份的资料也就丢失了，这点很让我疑惑，为什么手机锁屏密码忘记了会这么麻烦。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>今天(2022-06-20)发生了一件很不可思议的事情，我的vivo手机锁屏密码忘记了，还好我还记得vivo账号，在官网上找到解决办法：<code>备份资料，重置手机</code>。这样感觉确实达到想要的效果，但是没法备份的资料也就丢失了，这点很让我疑惑，为什么手机锁屏密码忘记了会这么麻烦。</p>
+<!-- more -->
+<p>下面是vivo对手机锁屏密码的说明：</p>
+<pre><code class="language-txt">基于消费者的隐私和信息安全，锁屏密码需要通过消费者手动设置确认并经过加密算法存储在手机本地，
+手机不具备自动设置密码或修改密码的功能，vivo/iQOO也不具备获取手机锁屏密码的方式，锁屏密码
+一旦忘记，将无法解锁手机并找回手机内的数据。
+</code></pre>
+<p>也就是说，密码忘了只能重置手机，再加上备份也只能部分备份。因此，不管怎样恢复（自己还是去服务中心），备份的资料只能尽可能挽救损失，丢了就是丢了。为什么不给用户多一个选择：<code>既可以资料不丢失，又可以重置密码</code>。</p>
+<p>据我了解，目前还做不到。唯一的解决办法就是找个其他设备记录一下，以免忘记。。。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[git push 常见用法]]></title>
+        <id>https://chenmi.online/blog/post/20220617/</id>
+        <link href="https://chenmi.online/blog/post/20220617/">
+        </link>
+        <updated>2022-06-17T05:18:50.000Z</updated>
+        <summary type="html"><![CDATA[<p>git push的一般形式为 git push &lt;远程主机名&gt; &lt;本地分支名&gt; &lt;远程分支名&gt; ，例如 git push origin master：refs/for/master，即将本地的master分支推送到远程主机origin上的对应master分支， origin 是远程主机名。第一个master是本地分支名，第二个master是远程分支名。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>git push的一般形式为 git push &lt;远程主机名&gt; &lt;本地分支名&gt; &lt;远程分支名&gt; ，例如 git push origin master：refs/for/master，即将本地的master分支推送到远程主机origin上的对应master分支， origin 是远程主机名。第一个master是本地分支名，第二个master是远程分支名。</p>
+<!-- more -->
+<h2 id="git-push-origin-master">git push origin master</h2>
+<p>如果远程分支被省略，如上则表示将本地分支推送到与之存在追踪关系的远程分支（通常两者同名），如果该远程分支不存在，则会被新建</p>
+<h2 id="git-push-origin-refsformaster">git push origin ：refs/for/master</h2>
+<p>如果省略本地分支名，则表示删除指定的远程分支，因为这等同于推送一个空的本地分支到远程分支，等同于 git push origin --delete master</p>
+<h2 id="git-push-origin">git push origin</h2>
+<p>如果当前分支与远程分支存在追踪关系，则本地分支和远程分支都可以省略，将当前分支推送到origin主机的对应分支</p>
+<h2 id="git-push">git push</h2>
+<p>如果当前分支只有一个远程分支，那么主机名都可以省略，形如 git push，可以使用git branch -r ，查看远程的分支名</p>
+<h2 id="git-push-的其他命令">git push 的其他命令</h2>
+<p>这几个常见的用法已足以满足我们日常开发的使用了，还有几个扩展的用法，如下：</p>
+<ol>
+<li>
+<p>git push -u origin master 如果当前分支与多个主机存在追踪关系，则可以使用 -u 参数指定一个默认主机，这样后面就可以不加任何参数使用git push，不带任何参数的git push，默认只推送当前分支，这叫做simple方式，还有一种matching方式，会推送所有有对应的远程分支的本地分支， Git 2.0之前默认使用matching，现在改为simple方式，如果想更改设置，可以使用git config命令。git config --global push.default matching OR git config --global push.default simple；可以使用git config -l 查看配置</p>
+</li>
+<li>
+<p>git push --all origin 当遇到这种情况就是不管是否存在对应的远程分支，将本地的所有分支都推送到远程主机，这时需要 -all 选项</p>
+</li>
+<li>
+<p>git push --force origin git push 的时候需要本地先git pull更新到跟服务器版本一致，如果本地版本库比远程服务器上的低，那么一般会提示你git pull更新，如果一定要提交，那么可以使用这个命令。</p>
+</li>
+<li>
+<p>git push origin --tags //git push 的时候不会推送分支，如果一定要推送标签的话那么可以使用这个命令</p>
+</li>
+</ol>
+<h2 id="关于-refsfor">关于 refs/for</h2>
+<p>// refs/for 的意义在于我们提交代码到服务器之后是需要经过code review 之后才能进行merge的，而refs/heads 不需要</p>
+<p>原文地址：<a href="https://www.cnblogs.com/qianqiannian/p/6008140.html">https://www.cnblogs.com/qianqiannian/p/6008140.html</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[reflow(回流)和repaint(重绘)]]></title>
+        <id>https://chenmi.online/blog/post/20220616/</id>
+        <link href="https://chenmi.online/blog/post/20220616/">
+        </link>
+        <updated>2022-06-16T07:53:23.000Z</updated>
+        <summary type="html"><![CDATA[<p>简要：整个在浏览器的渲染过程中（页面初始化，用户行为改变界面样式，动画改变界面样式等）reflow(回流)和repaint(重绘) 会大大影响web性能，尤其是手机页面。因此我们在页面设计的时候要尽量减少reflow和repaint。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>简要：整个在浏览器的渲染过程中（页面初始化，用户行为改变界面样式，动画改变界面样式等）reflow(回流)和repaint(重绘) 会大大影响web性能，尤其是手机页面。因此我们在页面设计的时候要尽量减少reflow和repaint。</p>
+<!-- more -->
+<h2 id="什么是reflow和repaint">什么是reflow和repaint</h2>
+<p><code>reflow</code>：例如某个子元素样式发生改变，直接影响到了其父元素以及往上追溯很多祖先元素（包括兄弟元素），这个时候浏览器要重新去渲染这个子元素相关联的所有元素的过程称为回流。</p>
+<p>reflow：几乎是无法避免的。现在界面上流行的一些效果，比如树状目录的折叠、展开（实质上是元素的显 示与隐藏）等，都将引起浏览器的 reflow。鼠标滑过、点击……只要这些行为引起了页面上某些元素的占位面积、定位方式、边距等属性的变化，都会引起它内部、周围甚至整个页面的重新渲 染。通常我们都无法预估浏览器到底会 reflow 哪一部分的代码，它们都彼此相互影响着。</p>
+<p><code>repaint</code>：如果只是改变某个元素的背景色、文 字颜色、边框颜色等等不影响它周围或内部布局的属性，将只会引起浏览器 repaint（重绘）。repaint 的速度明显快于 reflow</p>
+<h2 id="下面情况会导致reflow发生">下面情况会导致reflow发生</h2>
+<p>1：改变窗口大小<br>
+2：改变文字大小<br>
+3：内容的改变，如用户在输入框中敲字<br>
+4：激活伪类，如:hover<br>
+5：操作class属性<br>
+6：脚本操作DOM<br>
+7：计算offsetWidth和offsetHeight<br>
+8：设置style属性</p>
+<p>转载地址：<a href="http://www.cnblogs.com/Peng2014/p/4687218.html%EF%BC%89">http://www.cnblogs.com/Peng2014/p/4687218.html</a></p>
+]]></content>
+    </entry>
+</feed>

@@ -1,0 +1,812 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>在 Webpack 写一个 Loader | 晨米酱的Blog</title>
+
+<link rel="shortcut icon" href="https://chenmi.online/blog//favicon.ico?v=1656904005355">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://chenmi.online/blog//styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+
+<script href="https://chenmi.online/blog//js/main.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg navbar-fixed">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/blog/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            晨米酱的Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/archives" class="menu gt-a-link">
+                            动态
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1656904005355" action="/blog/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    在 Webpack 写一个 Loader
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-07-02 ·
+                    </time>
+                    
+                        <a href="https://chenmi.online/blog/tag/G8-LvBq6Z/" class="post-tags">
+                            # Webpack
+                        </a>
+                    
+                        <a href="https://chenmi.online/blog/tag/note/" class="post-tags">
+                            # 笔记
+                        </a>
+                    
+                        <a href="https://chenmi.online/blog/tag/reprint/" class="post-tags">
+                            # 转载
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="前言">前言</h2>
+<p>有的时候，你可能在从零搭建 <code>Webpack</code> 项目很熟悉，配置过各种 <code>loader</code> ，面试官在 <code>Webpack</code> 方面问你，是否自己实现过一个<code>loader</code> ？如果没有去了解过如果去实现，确实有点尴尬，其实呢，<code>loader</code> 实现其实很简单的。下面说下 <code>loader</code> 是什么？</p>
+<!-- more -->
+<blockquote>
+<p>为什么需要Loader?</p>
+</blockquote>
+<p>Webpack 它只能处理 js 和 JSON 文件。面对 css 文件还有一些图片等等，Webpack 它自己是不能够处理的，它需要loader 处理其他类型的文件并将它们转换为有效的模块以供应用程序使用并添加到依赖关系图中</p>
+<blockquote>
+<p>Loader是什么？</p>
+</blockquote>
+<p>loader本质上是一个node模块，符合Webpack中一切皆模块的思想。由于它是一个 node 模块，它必须导出一些东西。loader本身就是一个函数，在该函数中对接收到的内容进行转换，然后返回转换后的结果</p>
+<p>下面为你简单介绍下webpack中的loader</p>
+<h2 id="常见的loader">常见的loader</h2>
+<p>我们先来回顾下常见的 Loader 基础的配置和使用吧（仅仅只是常见的，npm上面开发者大佬们发布的太多了）</p>
+<p>那么开始吧，首先先介绍 处理 CSS 相关的 Loader</p>
+<h3 id="css-loader-和-style-loader">css-loader 和 style-loader</h3>
+<ul>
+<li>安装依赖</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-bash">npm install css-loader style-loader -D
+</code></pre>
+<ul>
+<li>使用加载器</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">module.exports = {
+    // ...
+    module: {
+        rules: [{
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader'],
+        }],
+    },
+}；
+</code></pre>
+<p>其中module.rules代表模块的处理规则。每个规则可以包含很多配置项</p>
+<p>test 可以接收正则表达式或元素为正则表达式的数组。只有与正则表达式匹配的模块才会使用此规则。在此示例中，/.css$/ 匹配所有以 .css 结尾的文件</p>
+<p>use 可以接收一个包含规则使用的加载器的数组。如果只配置了一个css-loader，当只有一个loader时也可以为字符串</p>
+<p>css-loader 的作用只是处理 CSS 的各种加载语法（@import 和 url() 函数等），如果样式要工作，则需要 style-loader 将样式插入页面</p>
+<p>style-loader加到了css-loader前面，这是因为在Webpack打包时是按照数组从后往前的顺序将资源交给loader处理的，因此要把最后生效的放在前面</p>
+<ul>
+<li>还可以这样写成对象的形式，里面options传入配置</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">module.exports = {
+    // ...
+    module: {
+        rules: [{
+            test: /\.css$/,
+            use: [
+                'style-loader',
+                  {
+                    loader: 'css-loader',
+                    options: {
+                        // css-loader 配置项
+                 },
+               }
+            ],
+        }],
+    },
+}；
+</code></pre>
+<blockquote>
+<p>exclude与include<br>
+include代表该规则只对正则匹配到的模块生效<br>
+exclude的含义是，所有被正则匹配到的模块都排除在该规则之外</p>
+</blockquote>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">rules: [
+    {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+        exclude: /node_modules/,
+        include: /src/,
+    }
+],
+</code></pre>
+<p>是否都还记得呢，现在有现成的脚手架，很多人都很少自己去配置这些了，欸~当然还有相关的 sass/less等等预处理器loader这里就不一一介绍了。</p>
+<h3 id="babel-loader">babel-loader</h3>
+<p>babel-loader 这个loader十分的重要，把高级语法转为ES5，常用于处理 ES6+ 并将其编译为 ES5。它允许我们在项目中使用最新的语言特性（甚至在提案中），而无需特别注意这些特性在不同平台上的兼容性。</p>
+<ul>
+<li>介绍下主要的三个模块</li>
+</ul>
+<ol>
+<li>babel-loader：使 Babel 与 Webpack 一起工作的模块</li>
+<li>@babel/core：Babel核心模块。</li>
+<li>@babel/preset-env：是Babel官方推荐的preseter，可以根据用户设置的目标环境，自动添加编译ES6+代码所需的插件和补丁</li>
+</ol>
+<ul>
+<li>安装</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-bash">npm install babel-loader @babel/core @babel/preset-env -D
+</code></pre>
+<ul>
+<li>配置</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">rules: [
+  {
+    test: /\.js$/,
+    exclude: /node_modules/, //排除掉，不排除拖慢打包的速度
+    use: {
+      loader: 'babel-loader',
+      options: {
+        cacheDirectory: true, // 启用缓存机制以防止在重新打包未更改的模块时进行二次编译
+        presets: [[
+          'env', {
+            modules: false, // 将ES6 Module的语法交给Webpack本身处理
+          }
+        ]],
+      },
+    },
+  }
+],
+</code></pre>
+<h3 id="html-loader">html-loader</h3>
+<p>Webpack 可不认识 html，直接报错，需要loader转化</p>
+<p>html-loader 用于将 HTML 文件转换为字符串并进行格式化，它允许我们通过 JS 加载一个 HTML 片段</p>
+<ul>
+<li>安装</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-bash">npm install html-loader -D
+</code></pre>
+<ul>
+<li>配置</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">rules: [
+    {
+        test: /\.html$/,
+        use: 'html-loader',
+    }
+],
+
+// index.js
+import otherHtml from './other.html';
+document.write(otherHtml);
+</code></pre>
+<p>这样你可以在js中加载另一个页面，写刀当前index.html里面</p>
+<h3 id="file-loader">file-loader</h3>
+<p>用于打包文件类型的资源，比如对png、jpg、gif等图片资源使用file-loader，然后就可以在JS中加载图片了</p>
+<ul>
+<li>安装</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-bash">npm install file-loader -D
+</code></pre>
+<ul>
+<li>配置</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">const path = require('path');
+module.exports = {
+    entry: './index.js',
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.js',
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: 'file-loader',
+            }
+        ],
+    },
+}；
+</code></pre>
+<h3 id="url-loader">url-loader</h3>
+<p>既然介绍了 file-loader 就不得不介绍 url-loader，它们很相似，但是唯一的区别是用户可以设置文件大小阈值。大于阈值时返回与file-loader相同的publicPath，小于阈值时返回文件base64编码。</p>
+<ul>
+<li>安装</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-bash">npm install url-loader -D
+</code></pre>
+<ul>
+<li>配置</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">rules: [
+    {
+        test: /\.(png|jpg|gif)$/,
+        use: {
+            loader: 'url-loader',
+            options: {
+                limit: 1024,
+                name: '[name].[ext]',
+                publicPath: './assets/',
+            },
+        },
+    }
+],
+</code></pre>
+<h3 id="ts-loader">ts-loader</h3>
+<p>TypeScript使用得越来越多，对于我们平时写代码有了更好的规范，项目更加利于维护...等等好处，我们也在Webpack中来配置loader,本质上类似于 babel-loader，是一个连接 Webpack 和 Typescript 的模块</p>
+<ul>
+<li>安装</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-bash">npm install ts-loader typescript
+</code></pre>
+<ul>
+<li>loader配置，主要的配置还是在 tsconfig.json 中</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">rules: [
+    {
+        test: /\.ts$/,
+        use: 'ts-loader',
+    }
+],
+</code></pre>
+<h3 id="vue-loader">vue-loader</h3>
+<p>用来处理vue组件,还要安装vue-template-compiler来编译Vue模板，估计大家大部分都用脚手架了</p>
+<ul>
+<li>安装</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-bash">npm install  vue-loader  vue-template-compiler -D
+</code></pre>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">rules: [
+    {
+        test: /\.vue$/,
+        use: 'vue-loader',
+    }
+],
+</code></pre>
+<h2 id="写一个简单的loader">写一个简单的Loader</h2>
+<p>介绍了几个常见的loader的安装配置，我们在具体的业务的实现的时候，可能遇到各种需求，上面介绍的或者npm上都没有的加载器都不适合当前的业务场景，那我们可以自己去实现一个自己的loader来满足自己的需求，下面介绍一下如何自定义一个loader</p>
+<ol>
+<li>初始化项目</li>
+</ol>
+<ul>
+<li>初始化项目<br>
+先创建一个项目文件夹（名字可以随意，当然肯定是英文名）后进行初始化</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-bash">npm init -y
+</code></pre>
+<ul>
+<li>安装依赖<br>
+安装依赖： Webpack 和 Webpack脚手架 和 热更新服务器</li>
+</ul>
+<p>不同的版本 Webpack 可能有些差异，如果你跟着我的这个例子写的话，建议和我装一样的版本</p>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">npm install webpack@4.39.2 webpack-cli@3.3.6 webpack-dev-server@3.11.0 -D
+</code></pre>
+<ul>
+<li>新建一个index.html文件<br>
+dist/index.html</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;zh-CN&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot; /&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+        &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot; /&gt;
+        &lt;title&gt;&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;script src=&quot;./bundle.js&quot;&gt;&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<ul>
+<li>新建一个入口文件 index.js 文件<br>
+src/index.js</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">document.write('hello world')
+</code></pre>
+<ul>
+<li>创建 webpack.config.js 配置文件<br>
+配置出口和入口文件</li>
+</ul>
+<p>配置devServer服务</p>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">const path = require('path')
+
+module.exports = {
+    entry: './src/index.js',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js',
+    },
+    devServer: {
+        contentBase: './dist',
+        overlay: {
+            warnings: true,
+            errors: true,
+        },
+        open: true,
+    },
+}
+</code></pre>
+<ul>
+<li>在 package.json 中配置启动命令</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">  &quot;scripts&quot;: {
+    &quot;dev&quot;: &quot;Webpack-dev-server&quot;
+  },
+</code></pre>
+<ul>
+<li>启动 npm run dev<br>
+devServer帮我们启动一个服务器，每次修改index.js不需要自己在去打包，而是自动帮我们完成这项任务</li>
+</ul>
+<p>页面内容就是我们index.js编写的内容被打包成在dist/bundle.js引入到index.html了</p>
+<ul>
+<li>当前目录结构</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-vim">Webpack-demo
+ ├── dist
+ │   └── index.html
+ ├── package-lock.json
+ ├── package.json
+ ├── src
+ │   └── index.js
+ └── Webpack.config.js
+</code></pre>
+<ol start="2">
+<li>实现一个简单的 loader</li>
+</ol>
+<ul>
+<li>在 src/MyLoader/my-loader.js</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">module.exports = function (source) {
+    // 在这里按照你的需求处理 source
+    return source.replace('word', ', I am Xiaolang')
+}
+</code></pre>
+<p>返回其它结果 this.callback</p>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">this.callback(    
+    // 当无法转换原内容时，给 Webpack 返回一个 Error   
+    err: Error | null,    
+    // 原内容转换后的内容    
+    content: string | Buffer,    
+    // 用于把转换后的内容得出原内容的 Source Map，方便调试
+    sourceMap?: SourceMap,    
+    // 如果本次转换为原内容生成了 AST 语法树，可以把这个 AST 返回,以方便之后需要 AST 的 Loader 复用该 AST，以避免重复生成 AST，提升性能 
+    abstractSyntaxTree?: AST
+);
+</code></pre>
+<p>打开代码对应的source-map，方便调试源代码。source-map 可以方便实际开发者在浏览器控制台查看源代码。如果不处理source-map，最终将无法生成正确的map文件，在浏览器的开发工具中可能会看到混乱的源代码。</p>
+<p>为了在使用 this.callback 返回内容时将 source-map 返回给 Webpack</p>
+<p>loader 必须返回 undefined 让 Webpack 知道 loader 返回的结果在 this.callback 中，而不是在 return</p>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">module.exports = function(source) { 
+    // 通过 this.callback 告诉 Webpack 返回的结果
+    this.callback(null, source.replace('word', ', I am Xiaolang'), sourceMaps);   
+    return;
+};
+</code></pre>
+<ul>
+<li>常用加载本地 loader 的两种方式</li>
+</ul>
+<blockquote>
+<p>使用 path.resolve 指向这个本地文件</p>
+</blockquote>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">const path = require('path')
+
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                use: path.resolve('./src/myLoader/my-loader.js'),
+            },
+        ],
+    },
+}
+</code></pre>
+<blockquote>
+<p>先去 node_modules 项目下寻找 my-loader，如果找不到，会再去 ./src/myLoader/ 目录下寻找</p>
+</blockquote>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">module.exports = {
+ //...
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                use: ['my-loader'],
+            },
+        ],
+    },
+    resolveLoader: {
+        modules: ['node_modules', './src/myLoader'],
+    },
+}
+</code></pre>
+<p>一个 loader的职责是单一的，使每个loader易维护。</p>
+<p>如果源文件需要分多步转换才能正常使用，通过多个Loader进行转换。当调用多个loader进行文件转换时，每个loader都会链式执行。</p>
+<p>第一个loader会得到要处理的原始内容，将前一个loader处理的结果传递给下一个。处理完毕，最终的Loader会将处理后的最终结果返回给 Webpack</p>
+<p>所以，当你写loader记得保持它的职责单一，你只关心输入和输出。</p>
+<ol start="3">
+<li>option 参数</li>
+</ol>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">module: {
+    rules: [
+        {
+            test: /\.js$/,
+            use: [
+                {
+                    loader: 'my-loader',
+                    options: {
+                        flag: true,
+                    },
+                },
+            ],
+        },
+    ],
+},
+</code></pre>
+<p>那么我们如何在loader中获取这个写入配置信息呢？</p>
+<p>Webpack 提供了loader-utils工具</p>
+<ul>
+<li>在之前写的loader修改</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">const loaderUtils = require('loader-utils')
+module.exports = function (source) {
+    // 获取到用户给当前 Loader 传入的 options
+    const options = loaderUtils.getOptions(this)
+    console.log('options--&gt;', options)
+    // 在这里按照你的需求处理 source
+    return source.replace('word', ', I am Xiaolang')
+}
+</code></pre>
+<p>控制台也打印了出来<br>
+4. 缓存<br>
+如果为每个构建重新执行重复的转换操作，这样Webpack构建可能会变得非常慢。</p>
+<p>Webpack 默认会缓存所有loader的处理结果，也就是说，当待处理的文件或者依赖的文件没有变化时，不会再次调用对应的loader进行转换操作</p>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">module.exports = function (source) {
+    // 开始缓存
+    this.cacheable &amp;&amp; this.cacheable();
+    // 在这里按照你的需求处理 source
+    return source.replace('word', ', I am Xiaolang')
+}
+</code></pre>
+<p>一般默认开启缓存，如果不想Webpack这个loader进行缓存，也可以关闭缓存</p>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">module.exports = function (source) {
+    // 关闭缓存
+    this.cacheable(false);
+    // 在这里按照你的需求处理 source
+    return source.replace('word', ', I am Xiaolang')
+}
+</code></pre>
+<ol start="5">
+<li>同步和异步<br>
+在某些情况下，转换步骤只能异步完成。</li>
+</ol>
+<p>例如，您需要发出网络请求以获取结果。如果使用同步方式，网络请求会阻塞整个构建，导致构建非常缓慢。</p>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">module.exports = function(source) {    
+    // 告诉 Webpack 本次转换是异步的，Loader 会在 callback 中回调结果
+    var callback = this.async()
+    // someAsyncOperation 代表一些异步的方法
+    someAsyncOperation(source, function (err, result, sourceMaps, ast) {
+        // 通过 callback 返回异步执行后的结果
+        callback(err, result, sourceMaps, ast)
+    })
+};
+</code></pre>
+<ol start="6">
+<li>处理二进制数据<br>
+默认情况下，Webpack 传递给 Loader 的原始内容是一个 UTF-8 格式编码的字符串。但是在某些场景下，加载器处理的不是文本文件，而是二进制文件</li>
+</ol>
+<p>官网例子 通过 exports.raw 属性告诉 Webpack 该 Loader 是否需要二进制数据</p>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">module.exports = function(source) {    
+    // 在 exports.raw === true 时，Webpack 传给 Loader 的 source 是 Buffer 类型的    
+    source instanceof Buffer === true;    
+    // Loader 返回的类型也可以是 Buffer 类型的    
+    // 在 exports.raw !== true 时，Loader 也可以返回 Buffer 类型的结果    
+    return source;
+};
+// 通过 exports.raw 属性告诉 Webpack 该 Loader 是否需要二进制数据 
+module.exports.raw = true;
+</code></pre>
+<ol start="7">
+<li>实现一个渲染markdown文档loader</li>
+</ol>
+<ul>
+<li>安装依赖 md 转 html 的依赖，当然可以选择另外一个模块 marked<br>
+我这里使用的 markdown-it</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-bash">npm install markdown-it@12.0.6 -D 
+</code></pre>
+<ul>
+<li>辅助工具 用来添加 div 和 class</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">module.exports = function ModifyStructure(html) {
+    // 把h3和h2开头的切成数组
+    const htmlList = html.replace(/&lt;h3/g, '$*(&lt;h3').replace(/&lt;h2/g, '$*(&lt;h2').split('$*(')
+
+    // 给他们套上 .card 类名的 div
+    return htmlList
+        .map(item =&gt; {
+            if (item.indexOf('&lt;h3') !== -1) {
+                return `&lt;div class=&quot;card card-3&quot;&gt;${item}&lt;/div&gt;`
+            } else if (item.indexOf('&lt;h2') !== -1) {
+                return `&lt;div class=&quot;card card-2&quot;&gt;${item}&lt;/div&gt;`
+            }
+            return item
+        })
+        .join('')
+}
+</code></pre>
+<ul>
+<li>新建一个loader<br>
+/src/myLoader/md-loader.js</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">const { getOptions } = require('loader-utils')
+const MarkdownIt = require('markdown-it')
+const beautify = require('./beautify')
+module.exports = function (source) {
+    const options = getOptions(this) || {}
+    const md = new MarkdownIt({
+        html: true,
+        ...options,
+    })
+    let html = beautify(md.render(source))
+    html = `module.exports = ${JSON.stringify(html)}`
+    this.callback(null, html)
+}
+</code></pre>
+<p>这样loader也写完了，this.callback(null, html) 和 return 在这里差不多哈。</p>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">html = `module.exports = ${JSON.stringify(html)}`
+</code></pre>
+<p>这里解析的结果是一个 HTML 字符串。如果直接返回，也会面临Webpack无法解析模块的问题。正确的做法是把这个HTML字符串拼接成一段JS代码。</p>
+<p>这时候我们要返回的代码就是通过module.exports导出这个HTML字符串，这样外界在导入模块的时候就可以接收到这个HTML字符串。</p>
+<ul>
+<li>然后在webpack.config.js使用这个加载器</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">const path = require('path')
+
+module.exports = {
+    entry: './src/index.js',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js',
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                use: [
+                    {
+                        loader: 'my-loader',
+                        options: {
+                            flag: true,
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.md$/,
+                use: [
+                    {
+                        loader: 'md-loader',
+                    },
+                ],
+            },
+        ],
+    },
+    resolveLoader: {
+        modules: ['node_modules', './src/myLoader'],
+    },
+    devServer: {
+        contentBase: './dist',
+        overlay: {
+            warnings: true,
+            errors: true,
+        },
+        open: true,
+    },
+}
+</code></pre>
+<ul>
+<li>最后在index.js中加载一个md文件，我这里随便整个，新建github的readme.md</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-js">document.write('hello word')
+
+import mdHtml from './test.md'
+const content = document.createElement('div')
+content.className = 'content'
+content.innerHTML = mdHtml
+document.body.appendChild(content)
+</code></pre>
+<ul>
+<li>目录结构</li>
+</ul>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-vim">Webpack-demo
+ ├── dist
+ │   └── index.html
+ ├── package-lock.json
+ ├── package.json
+ ├── src
+ │   ├── index.js
+ │   ├── myLoader
+ │   │   ├── beautify.js
+ │   │   ├── md-loader.js
+ │   │   └── my-loader.js
+ │   └── test.md
+ └── webpack.config.js
+</code></pre>
+<blockquote>
+<p>github仓库地址：https://github.com/LianTianNo1/webpack-loader-demo</p>
+</blockquote>
+<h2 id="结语">结语</h2>
+<p>感谢大家能看到这里哈~ ，现在打包构建工具也慢慢增多了vue-cli，vite等等，但是 webpack 仍然有一席之地，很多值得学习的地方，继续努力学习~~</p>
+<p>原文地址：<a href="https://juejin.cn/post/7100534685134454815">https://juejin.cn/post/7100534685134454815</a></p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://chenmi.online/blog/post/20220629/" class="post-title gt-a-link">
+                    如何在 HTML 中使用 Preload 和 Prefetch 来加载资源
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+<script>
+    // md5.min.js
+    !function(n){
+        "use strict";
+        function d(n,t){var r=(65535&n)+(65535&t);return(n>>16)+(t>>16)+(r>>16)<<16|65535&r}
+        function f(n,t,r,e,o,u){return d((c=d(d(t,n),d(e,u)))<<(f=o)|c>>>32-f,r);var c,f}
+        function l(n,t,r,e,o,u,c){return f(t&r|~t&e,n,t,o,u,c)}
+        function v(n,t,r,e,o,u,c){return f(t&e|r&~e,n,t,o,u,c)}
+        function g(n,t,r,e,o,u,c){return f(t^r^e,n,t,o,u,c)}
+        function m(n,t,r,e,o,u,c){return f(r^(t|~e),n,t,o,u,c)}
+        function i(n,t){var r,e,o,u,c;n[t>>5]|=128<<t%32,n[14+(t+64>>>9<<4)]=t;var f=1732584193,i=-271733879,a=-1732584194,h=271733878;for(r=0;r<n.length;r+=16)f=l(e=f,o=i,u=a,c=h,n[r],7,-680876936),h=l(h,f,i,a,n[r+1],12,-389564586),a=l(a,h,f,i,n[r+2],17,606105819),i=l(i,a,h,f,n[r+3],22,-1044525330),f=l(f,i,a,h,n[r+4],7,-176418897),h=l(h,f,i,a,n[r+5],12,1200080426),a=l(a,h,f,i,n[r+6],17,-1473231341),i=l(i,a,h,f,n[r+7],22,-45705983),f=l(f,i,a,h,n[r+8],7,1770035416),h=l(h,f,i,a,n[r+9],12,-1958414417),a=l(a,h,f,i,n[r+10],17,-42063),i=l(i,a,h,f,n[r+11],22,-1990404162),f=l(f,i,a,h,n[r+12],7,1804603682),h=l(h,f,i,a,n[r+13],12,-40341101),a=l(a,h,f,i,n[r+14],17,-1502002290),f=v(f,i=l(i,a,h,f,n[r+15],22,1236535329),a,h,n[r+1],5,-165796510),h=v(h,f,i,a,n[r+6],9,-1069501632),a=v(a,h,f,i,n[r+11],14,643717713),i=v(i,a,h,f,n[r],20,-373897302),f=v(f,i,a,h,n[r+5],5,-701558691),h=v(h,f,i,a,n[r+10],9,38016083),a=v(a,h,f,i,n[r+15],14,-660478335),i=v(i,a,h,f,n[r+4],20,-405537848),f=v(f,i,a,h,n[r+9],5,568446438),h=v(h,f,i,a,n[r+14],9,-1019803690),a=v(a,h,f,i,n[r+3],14,-187363961),i=v(i,a,h,f,n[r+8],20,1163531501),f=v(f,i,a,h,n[r+13],5,-1444681467),h=v(h,f,i,a,n[r+2],9,-51403784),a=v(a,h,f,i,n[r+7],14,1735328473),f=g(f,i=v(i,a,h,f,n[r+12],20,-1926607734),a,h,n[r+5],4,-378558),h=g(h,f,i,a,n[r+8],11,-2022574463),a=g(a,h,f,i,n[r+11],16,1839030562),i=g(i,a,h,f,n[r+14],23,-35309556),f=g(f,i,a,h,n[r+1],4,-1530992060),h=g(h,f,i,a,n[r+4],11,1272893353),a=g(a,h,f,i,n[r+7],16,-155497632),i=g(i,a,h,f,n[r+10],23,-1094730640),f=g(f,i,a,h,n[r+13],4,681279174),h=g(h,f,i,a,n[r],11,-358537222),a=g(a,h,f,i,n[r+3],16,-722521979),i=g(i,a,h,f,n[r+6],23,76029189),f=g(f,i,a,h,n[r+9],4,-640364487),h=g(h,f,i,a,n[r+12],11,-421815835),a=g(a,h,f,i,n[r+15],16,530742520),f=m(f,i=g(i,a,h,f,n[r+2],23,-995338651),a,h,n[r],6,-198630844),h=m(h,f,i,a,n[r+7],10,1126891415),a=m(a,h,f,i,n[r+14],15,-1416354905),i=m(i,a,h,f,n[r+5],21,-57434055),f=m(f,i,a,h,n[r+12],6,1700485571),h=m(h,f,i,a,n[r+3],10,-1894986606),a=m(a,h,f,i,n[r+10],15,-1051523),i=m(i,a,h,f,n[r+1],21,-2054922799),f=m(f,i,a,h,n[r+8],6,1873313359),h=m(h,f,i,a,n[r+15],10,-30611744),a=m(a,h,f,i,n[r+6],15,-1560198380),i=m(i,a,h,f,n[r+13],21,1309151649),f=m(f,i,a,h,n[r+4],6,-145523070),h=m(h,f,i,a,n[r+11],10,-1120210379),a=m(a,h,f,i,n[r+2],15,718787259),i=m(i,a,h,f,n[r+9],21,-343485551),f=d(f,e),i=d(i,o),a=d(a,u),h=d(h,c);return[f,i,a,h]}
+        function a(n){var t,r="",e=32*n.length;for(t=0;t<e;t+=8)r+=String.fromCharCode(n[t>>5]>>>t%32&255);return r}
+        function h(n){var t,r=[];for(r[(n.length>>2)-1]=void 0,t=0;t<r.length;t+=1)r[t]=0;var e=8*n.length;for(t=0;t<e;t+=8)r[t>>5]|=(255&n.charCodeAt(t/8))<<t%32;return r}
+        function e(n){var t,r,e="0123456789abcdef",o="";for(r=0;r<n.length;r+=1)t=n.charCodeAt(r),o+=e.charAt(t>>>4&15)+e.charAt(15&t);return o}
+        function r(n){return unescape(encodeURIComponent(n))}
+        function o(n){return a(i(h(t=r(n)),8*t.length));var t}
+        function u(n,t){return function(n,t){var r,e,o=h(n),u=[],c=[];for(u[15]=c[15]=void 0,16<o.length&&(o=i(o,8*n.length)),r=0;r<16;r+=1)u[r]=909522486^o[r],c[r]=1549556828^o[r];return e=i(u.concat(h(t)),512+8*t.length),a(i(c.concat(e),640))}(r(n),r(t))}
+        function t(n,t,r){return t?r?u(t,n):e(u(t,n)):r?o(n):e(o(n))}
+        "function"==typeof define&&define.amd?define(function(){return t}):"object"==typeof module&&module.exports?module.exports=t:n.md5=t;
+    }(this);
+</script>
+
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '92f9295dc818f5b2020c',
+    clientSecret: '400db341248f8ef795e703eb63388fb57c175248',
+    repo: 'blog',
+    owner: 'Your-songs-are-so-good',
+    admin: ['Your-songs-are-so-good'],
+    id: md5(location.pathname),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false       // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">个人博客</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/Your-songs-are-so-good" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://chenmi.online/blog//atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

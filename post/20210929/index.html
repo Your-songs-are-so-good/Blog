@@ -1,0 +1,359 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>【笔记】UML概念模型 | 晨米酱的Blog</title>
+
+<link rel="shortcut icon" href="https://chenmi.online/blog//favicon.ico?v=1656904005355">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://chenmi.online/blog//styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+
+<script href="https://chenmi.online/blog//js/main.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg navbar-fixed">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/blog/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            晨米酱的Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/archives" class="menu gt-a-link">
+                            动态
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1656904005355" action="/blog/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    【笔记】UML概念模型
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-09-29 ·
+                    </time>
+                    
+                        <a href="https://chenmi.online/blog/tag/uml/" class="post-tags">
+                            # UML
+                        </a>
+                    
+                        <a href="https://chenmi.online/blog/tag/note/" class="post-tags">
+                            # 笔记
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>UML概念模型主要包括基本<code>构造块</code>、运用于构造块的<code>通用机制</code>和用于组织UML视图的<code>架构</code></p>
+<h2 id="构造块">构造块</h2>
+<p>构造块是UML的基本建模元素，是UML中用于表达的语言元素，是来自现实世界中概念的抽象描述方法。包括事物、关系和图。事物是对模型中关键元素的抽象体现；关系是事物和事物之间的联系方式；图是相关事物及其关系的聚合表现。</p>
+<!-- more -->
+<h3 id="事物">事物</h3>
+<p>事物包含构建事物，行为事物，分组事物，注释事物</p>
+<ol>
+<li>
+<p>构建事物：UML模型的静态部分，描述概念或者物理元素；包含以下</p>
+<ul>
+<li>类class：具有相同属性、相同操作、相同关系、相同语义的<strong>一组对象</strong>描述</li>
+<li>接口interface：描述元素的外部可见行为，即服务集合的定义说明</li>
+<li>协作collaboration：多个元素共同工作、相互配合达到某个目的的交互动作</li>
+<li>用例use case：一组动作序列的集合，动作序列特定的参与者触发或执行，结果可以反馈给参与者或者作为参数</li>
+<li>组件component：系统中封装好的模块化部件（类似java中jar包），仅将外部接口暴露出来，内部实现隐藏</li>
+<li>节点node：运行时存在的物理元素</li>
+</ul>
+</li>
+<li>
+<p>行为事物：UML模型图的动态部分，描述静态元素之间产生的空间和时间的行为动作，类似于句子中的动词</p>
+<ul>
+<li>交互：实现某功能的一组构建事物（元素）之间消息的集合，涉及消息，动作序列，连接</li>
+<li>状态机：描述事物或交互在生命周期内相应事件所经历的状态序列</li>
+<li>活动：描述一个操作执行时的过程信息</li>
+</ul>
+</li>
+<li>
+<p>分组事物： UML模型图的组织部分，描述事物的组织结构包：把元素组织成组的机制</p>
+</li>
+<li>
+<p>注释事物： UML模型的解释部分，用来对模型中的元素进行说明，解释</p>
+</li>
+</ol>
+<h3 id="关系">关系</h3>
+<p>关系是事物之间具体化的语义连接，在UML中有四种基本关系</p>
+<ol>
+<li>关联 association
+<ul>
+<li>描述不同类元的实例之间的连接。一种对象和另一种对象存在联系，即“从一个对象可以访问到另一个对象”，例如：人和身份证</li>
+</ul>
+</li>
+<li>依赖dependency
+<ul>
+<li>描述一对模型元素之间的内在联系(语义关系<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>)。一个元素的某些特性随着另一个独立的元素的特性变化而改变，例如：人和自行车</li>
+</ul>
+</li>
+<li>泛化generalization
+<ul>
+<li>类似于面向对象方法中的继承关系，即一个具体类对另一个具体类的继承，例如：宝马类泛化了小汽车类</li>
+</ul>
+</li>
+<li>实现realization
+<ul>
+<li>一种类与接口的关系，表示类是接口所有特征和行为的实现</li>
+</ul>
+</li>
+</ol>
+<h3 id="图">图</h3>
+<p>根据UML图的基本功能和作用，包含以下</p>
+<p>结构图：捕获事物与事物的之间的静态关系，用来描述系统的静态结构模型</p>
+<p>行为图：捕获事物交互过程如何产生系统行为，用来描述系统的动态行为模型</p>
+<p>UML2规范包含了：类图、对象图、组合结构图、组件图、部署图、包图、外廓图、用例图、活动图、状态机图、顺序图、通信图、时序图、交互概览图（后期笔记会进行整理）</p>
+<h2 id="uml通用机制">UML通用机制</h2>
+<p>通用机制描述了面向对象建模目的4种策略，并在UML不同的语境下被反复使用，使得UML更简单并易于使用</p>
+<ol>
+<li>
+<p>规格说明specifications</p>
+<ul>
+<li>构造块的语法和语义的描述</li>
+</ul>
+</li>
+<li>
+<p>修饰adornments</p>
+<ul>
+<li>对规格说明的文字或图形的表示</li>
+</ul>
+</li>
+<li>
+<p>通用划分common divisions</p>
+<ul>
+<li>类型-实例：通用描述与某个特定的元素的对应，例如：类和对象</li>
+<li>接口-实现：接口和实现它的类或组件、用例与实现它的协作、操作与实现它的方法等</li>
+</ul>
+</li>
+<li>
+<p>UML扩展机制extensibility mechanisms</p>
+<ul>
+<li>
+<p>本身的描述能力可能不够，需要扩充某些细节上描述。在不改变整体语言风格的基础上定义一些通用性的扩展</p>
+</li>
+<li>
+<p>构造型</p>
+<p>构造型扩展了UML的词汇，可以用来创造新的构造块，这个新构造块是从现有的构造块派生的，但是针对特定的问题。 在图形上，把构造型表示成用双尖括号(&lt;&lt;&gt;&gt;)括起来的名字，放在其他元素名之上。</p>
+</li>
+<li>
+<p>标记值</p>
+<p>标记值扩展了构造型的特性，可以用来创建构造型规约的新信息。 <img src="https://cdn.timsrc.com/img/%E8%A1%8D%E5%9E%8B%E4%B8%8E%E6%A0%87%E8%AE%B0%E5%80%BC.jpg" alt="衍型与标记值" loading="lazy"></p>
+<p>如上图所示，authored是基于类扩展而来的构造型，用来表述事件队列；针对authored构造型有一个注释，注释中的version和author并不是UML的基本概念，而是新扩展的标记值，用来说明构造型的特殊信息。</p>
+</li>
+<li>
+<p>约束</p>
+<p>约束是对UML规则的扩展，或者是对已有规则的修改，使用{}中的文本串表示。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="41架构">“4+1”架构</h2>
+<p>采用<strong>用例驱动</strong>，在软件生命周期的各个阶段对软件进行建模，从不同视角对系统进行解读，从而形成统一软件过程架构描述</p>
+<ul>
+<li>
+<p>组成：逻辑视图（类图）、开发视图（组件图）、进程视图（顺序图、协作图、状态机图）、物理进程（部署图）和场景视图（用例图）<br>
+<img src="https://chenmi.online/blog//post-images/1632874296702.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>逻辑视图：用于描述系统的功能需求，即系统给用户提供哪些服务；以及描述系统软件功能拆解后的组件关系、组件约束和边界，反映系统整体组成与系统如何构建的过程。在UML中由类图来表示</p>
+</li>
+<li>
+<p>开发视图：开发视图关注软件开发环境下实际模块的组织，反映系统开发实施过程。</p>
+<p>一个设计良好的开发视图，应该能够满足以下要求：</p>
+<blockquote>
+<p>通过逻辑架构元素，能够找到它所有代码和所有的二进制交付件 每一个代码源文件，都能够找到它所属的逻辑架构元素 每一个二进制交付件，都能够找到它集成了哪些逻辑架构元素</p>
+</blockquote>
+</li>
+<li>
+<p>进程视图：用于描述系统软件组件之间的通信时序，数据的输入输出。在UML中通常由时序图和流程图表示</p>
+</li>
+<li>
+<p>物理视图：开发出的软件系统，最终是要运行在物理或软件环境上。物理环境可能是服务器、PC机、移动终端等物理设备；软件环境可以是虚拟机、容器、进程或线程。部署视图就是对这个部署信息进行描述。在UML中通常由部署图表示</p>
+</li>
+<li>
+<p>场景视图：场景视图，即4+1中的1，4+1中的4个视图都是围绕着场景视图为核心的。它用于描述系统的参与者与功能用例间的关系，反映系统的最终需求和交互设计</p>
+</li>
+<li>
+<p>软件架构设计流程：场景视图（架构师与客户）=〉逻辑视图（架构师与开发人员）=〉进程视图、开发视图、物理视图（开发小组）</p>
+</li>
+</ul>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>语义关系，指语言单位之间在意义上的关系，主要表现为纵的方向上的聚合关系和横的方向上的组合关系，以及逻辑关系。语义的聚合关系指根据语言单位之间在意义上的对比而确立的可替代的垂直关系，包括同义关系、反义关系、类义关系、异义关系等；语义的组合关系指语言单位在语言体系中和语流中相互搭配构成的关系，包括施受关系、领属关系、限定关系、并列关系、支配关系、判断关系、说明补充关系等；语义的聚合关系和组合关系都是建立在逻辑关系的基础上的。语义的逻辑关系还有预设关系、蕴涵关系等。 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://chenmi.online/blog/post/20210925/" class="post-title gt-a-link">
+                    【笔记】css过渡(transition)
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+<script>
+    // md5.min.js
+    !function(n){
+        "use strict";
+        function d(n,t){var r=(65535&n)+(65535&t);return(n>>16)+(t>>16)+(r>>16)<<16|65535&r}
+        function f(n,t,r,e,o,u){return d((c=d(d(t,n),d(e,u)))<<(f=o)|c>>>32-f,r);var c,f}
+        function l(n,t,r,e,o,u,c){return f(t&r|~t&e,n,t,o,u,c)}
+        function v(n,t,r,e,o,u,c){return f(t&e|r&~e,n,t,o,u,c)}
+        function g(n,t,r,e,o,u,c){return f(t^r^e,n,t,o,u,c)}
+        function m(n,t,r,e,o,u,c){return f(r^(t|~e),n,t,o,u,c)}
+        function i(n,t){var r,e,o,u,c;n[t>>5]|=128<<t%32,n[14+(t+64>>>9<<4)]=t;var f=1732584193,i=-271733879,a=-1732584194,h=271733878;for(r=0;r<n.length;r+=16)f=l(e=f,o=i,u=a,c=h,n[r],7,-680876936),h=l(h,f,i,a,n[r+1],12,-389564586),a=l(a,h,f,i,n[r+2],17,606105819),i=l(i,a,h,f,n[r+3],22,-1044525330),f=l(f,i,a,h,n[r+4],7,-176418897),h=l(h,f,i,a,n[r+5],12,1200080426),a=l(a,h,f,i,n[r+6],17,-1473231341),i=l(i,a,h,f,n[r+7],22,-45705983),f=l(f,i,a,h,n[r+8],7,1770035416),h=l(h,f,i,a,n[r+9],12,-1958414417),a=l(a,h,f,i,n[r+10],17,-42063),i=l(i,a,h,f,n[r+11],22,-1990404162),f=l(f,i,a,h,n[r+12],7,1804603682),h=l(h,f,i,a,n[r+13],12,-40341101),a=l(a,h,f,i,n[r+14],17,-1502002290),f=v(f,i=l(i,a,h,f,n[r+15],22,1236535329),a,h,n[r+1],5,-165796510),h=v(h,f,i,a,n[r+6],9,-1069501632),a=v(a,h,f,i,n[r+11],14,643717713),i=v(i,a,h,f,n[r],20,-373897302),f=v(f,i,a,h,n[r+5],5,-701558691),h=v(h,f,i,a,n[r+10],9,38016083),a=v(a,h,f,i,n[r+15],14,-660478335),i=v(i,a,h,f,n[r+4],20,-405537848),f=v(f,i,a,h,n[r+9],5,568446438),h=v(h,f,i,a,n[r+14],9,-1019803690),a=v(a,h,f,i,n[r+3],14,-187363961),i=v(i,a,h,f,n[r+8],20,1163531501),f=v(f,i,a,h,n[r+13],5,-1444681467),h=v(h,f,i,a,n[r+2],9,-51403784),a=v(a,h,f,i,n[r+7],14,1735328473),f=g(f,i=v(i,a,h,f,n[r+12],20,-1926607734),a,h,n[r+5],4,-378558),h=g(h,f,i,a,n[r+8],11,-2022574463),a=g(a,h,f,i,n[r+11],16,1839030562),i=g(i,a,h,f,n[r+14],23,-35309556),f=g(f,i,a,h,n[r+1],4,-1530992060),h=g(h,f,i,a,n[r+4],11,1272893353),a=g(a,h,f,i,n[r+7],16,-155497632),i=g(i,a,h,f,n[r+10],23,-1094730640),f=g(f,i,a,h,n[r+13],4,681279174),h=g(h,f,i,a,n[r],11,-358537222),a=g(a,h,f,i,n[r+3],16,-722521979),i=g(i,a,h,f,n[r+6],23,76029189),f=g(f,i,a,h,n[r+9],4,-640364487),h=g(h,f,i,a,n[r+12],11,-421815835),a=g(a,h,f,i,n[r+15],16,530742520),f=m(f,i=g(i,a,h,f,n[r+2],23,-995338651),a,h,n[r],6,-198630844),h=m(h,f,i,a,n[r+7],10,1126891415),a=m(a,h,f,i,n[r+14],15,-1416354905),i=m(i,a,h,f,n[r+5],21,-57434055),f=m(f,i,a,h,n[r+12],6,1700485571),h=m(h,f,i,a,n[r+3],10,-1894986606),a=m(a,h,f,i,n[r+10],15,-1051523),i=m(i,a,h,f,n[r+1],21,-2054922799),f=m(f,i,a,h,n[r+8],6,1873313359),h=m(h,f,i,a,n[r+15],10,-30611744),a=m(a,h,f,i,n[r+6],15,-1560198380),i=m(i,a,h,f,n[r+13],21,1309151649),f=m(f,i,a,h,n[r+4],6,-145523070),h=m(h,f,i,a,n[r+11],10,-1120210379),a=m(a,h,f,i,n[r+2],15,718787259),i=m(i,a,h,f,n[r+9],21,-343485551),f=d(f,e),i=d(i,o),a=d(a,u),h=d(h,c);return[f,i,a,h]}
+        function a(n){var t,r="",e=32*n.length;for(t=0;t<e;t+=8)r+=String.fromCharCode(n[t>>5]>>>t%32&255);return r}
+        function h(n){var t,r=[];for(r[(n.length>>2)-1]=void 0,t=0;t<r.length;t+=1)r[t]=0;var e=8*n.length;for(t=0;t<e;t+=8)r[t>>5]|=(255&n.charCodeAt(t/8))<<t%32;return r}
+        function e(n){var t,r,e="0123456789abcdef",o="";for(r=0;r<n.length;r+=1)t=n.charCodeAt(r),o+=e.charAt(t>>>4&15)+e.charAt(15&t);return o}
+        function r(n){return unescape(encodeURIComponent(n))}
+        function o(n){return a(i(h(t=r(n)),8*t.length));var t}
+        function u(n,t){return function(n,t){var r,e,o=h(n),u=[],c=[];for(u[15]=c[15]=void 0,16<o.length&&(o=i(o,8*n.length)),r=0;r<16;r+=1)u[r]=909522486^o[r],c[r]=1549556828^o[r];return e=i(u.concat(h(t)),512+8*t.length),a(i(c.concat(e),640))}(r(n),r(t))}
+        function t(n,t,r){return t?r?u(t,n):e(u(t,n)):r?o(n):e(o(n))}
+        "function"==typeof define&&define.amd?define(function(){return t}):"object"==typeof module&&module.exports?module.exports=t:n.md5=t;
+    }(this);
+</script>
+
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '92f9295dc818f5b2020c',
+    clientSecret: '400db341248f8ef795e703eb63388fb57c175248',
+    repo: 'blog',
+    owner: 'Your-songs-are-so-good',
+    admin: ['Your-songs-are-so-good'],
+    id: md5(location.pathname),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false       // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">个人博客</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/Your-songs-are-so-good" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://chenmi.online/blog//atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

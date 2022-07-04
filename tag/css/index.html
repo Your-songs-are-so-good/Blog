@@ -1,0 +1,212 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>CSS | 晨米酱的Blog</title>
+
+<link rel="shortcut icon" href="https://chenmi.online/blog//favicon.ico?v=1656904005355">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://chenmi.online/blog//styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+
+<script href="https://chenmi.online/blog//js/main.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg navbar-fixed">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/blog/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            晨米酱的Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/archives" class="menu gt-a-link">
+                            动态
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1656904005355" action="/blog/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+        <div class="current-tag-container">
+            <h2 class="title gt-c-content-color-first">
+                #CSS
+            </h2>
+        </div>
+        <div class="post-list-container">
+    <div class="post-inner">
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://chenmi.online/blog/post/20220107/">
+                            <span class="post-title gt-c-content-color-first">JavaScript 动画</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <p>使用javascript也可以实现css动画的效果，涉及到函数requestAnimationFrame()，接收的参数是重绘前调用的函数，这个函数会接受一个DOMHighResTimeStamp实例(比如performance.now()的返回值)，以此为基础的动画函数如下：</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-01-07 ·
+                        </time>
+                        
+                            <a href="https://chenmi.online/blog/tag/css/" class="post-tag">
+                                # CSS
+                            </a>
+                        
+                            <a href="https://chenmi.online/blog/tag/note/" class="post-tag">
+                                # 笔记
+                            </a>
+                        
+                            <a href="https://chenmi.online/blog/tag/JavaScript/" class="post-tag">
+                                # JavaScript
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://chenmi.online/blog/post/20210925/">
+                            <span class="post-title gt-c-content-color-first">【笔记】css过渡(transition)</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <h2 id="简写属性">简写属性</h2>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code class="language-css">transition =[[none|&lt;transition-property&gt;] || &lt;time&gt; || &lt;transition-timing-function&gt; || &lt;time&gt;]
+初始值：all 0s ease 0s
+</code></pre>
+<ul>
+<li>第一个值指定哪些属性采用过渡，第二个值指定过渡时间，第三个指定过渡函数，第四个指定过渡延迟</li>
+</ul>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2021-09-25 ·
+                        </time>
+                        
+                            <a href="https://chenmi.online/blog/tag/css/" class="post-tag">
+                                # CSS
+                            </a>
+                        
+                            <a href="https://chenmi.online/blog/tag/note/" class="post-tag">
+                                # 笔记
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+    </div>
+</div>
+        <div class="pagination-container">
+    
+    
+</div>
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">个人博客</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/Your-songs-are-so-good" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://chenmi.online/blog//atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

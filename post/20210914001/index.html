@@ -1,0 +1,358 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>五类字体serif，sans-serif，monospace，cursive和fantasy | 晨米酱的Blog</title>
+
+<link rel="shortcut icon" href="https://chenmi.online/blog//favicon.ico?v=1656904005355">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://chenmi.online/blog//styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+
+<script href="https://chenmi.online/blog//js/main.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg navbar-fixed">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/blog/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            晨米酱的Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/archives" class="menu gt-a-link">
+                            动态
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1656904005355" action="/blog/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    五类字体serif，sans-serif，monospace，cursive和fantasy
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-09-14 ·
+                    </time>
+                    
+                        <a href="https://chenmi.online/blog/tag/reprint/" class="post-tags">
+                            # 转载
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="一示例">一.示例</h2>
+<p><img src="https://chenmi.online/blog//post-images/1631580166782.png" alt="" loading="lazy"><br>
+generic-font-families</p>
+<!-- more -->
+<p>P.S.更多英文字体示例见参考资料-<a href="https://www.w3.org/Style/Examples/007/fonts.en.html">五种一般字体族英文示例</a></p>
+<p>P.S.更多中文字体示例见参考资料-<a href="https://webdesign.tutsplus.com/articles/the-complete-beginners-guide-to-chinese-fonts--cms-23444">The Complete Beginner’s Guide to Chinese Fonts</a></p>
+<h2 id="二作用">二.作用</h2>
+<pre><div class='code-bar'><span></span><span></span><span></span></div><code>Generic font families are a fallback mechanism, a means of preserving some of the style sheet author’s intent in the worst case when none of the specified fonts can be selected.
+</code></pre>
+<p>（摘自15.3.1 <a href="https://www.w3.org/TR/CSS2/fonts.html#generic-font-families">Generic font families</a>）</p>
+<p>由于不是所有字体在所有终端设备上都可用（有几千种字体，而且大部分都不是免费的），CSS提供了一种fallback机制：先列出想要的字体，再列出作为替补的字体，最后以一般字体族结尾</p>
+<p>在最坏的情况下（指定的所有字体都不可用时），能通过这种方式保留一些样式表编写者的意图</p>
+<p>一般字体族共有5个：serif，sans-serif，monospace，cursive和fantasy，相对常用的是前3个（衬线，无衬线和等宽字体族）</p>
+<h2 id="三特点">三.特点</h2>
+<h3 id="serif-衬线字体族">serif 衬线字体族</h3>
+<p>特点：</p>
+<ul>
+<li>
+<p>具有修饰过的笔画，向外展开的或者尖细的末端，或者是带有实际衬线的末端</p>
+</li>
+<li>
+<p>一笔一划末端（两头）都带点变化装饰，比如宋体笔画末端有毛笔字的感觉</p>
+</li>
+<li>
+<p>文字末端有差异，在小字号下仍然容易辨认。但在大字号下笔画装饰部分可能会显得模糊或带有锯齿</p>
+</li>
+</ul>
+<p>示例：</p>
+<ul>
+<li>
+<p>Times New Roman、MS Georgia</p>
+</li>
+<li>
+<p>宋体、仿宋</p>
+</li>
+</ul>
+<p>衍生：</p>
+<ul>
+<li>petit-serif 小衬线字体族</li>
+</ul>
+<p>末端变化不明显，可以当做无衬线</p>
+<ul>
+<li>slab-serif 雕版衬线字体族</li>
+</ul>
+<p>末端变化非常明显</p>
+<h3 id="sans-serif-无衬线字体族">sans-serif 无衬线字体族</h3>
+<p>sans-前缀是法语，发音为/san/，意为“无”</p>
+<p>特点：</p>
+<ul>
+<li>
+<p>具有笔画清晰的末端–带有一点或者没有向外展开的，交错笔画，或者其它装饰</p>
+</li>
+<li>
+<p>与“衬线字体”相比，如果字号比较小，看起来就会有些难以分辨，尤其段落阅读时容易串行</p>
+</li>
+</ul>
+<p>示例：</p>
+<ul>
+<li>
+<p>MS Trebuchet、MS Arial、MS Verdana</p>
+</li>
+<li>
+<p>黑体、幼圆、隶书、楷体</p>
+</li>
+</ul>
+<h3 id="cursive-手写字体族">cursive 手写字体族</h3>
+<p>特点：</p>
+<ul>
+<li>
+<p>像手写的一样<br>
+示例：</p>
+</li>
+<li>
+<p>Caflisch Script、Adobe Poetica</p>
+</li>
+<li>
+<p>徐静蕾手写体、迷你简黄草、华文行草、少女体</p>
+</li>
+</ul>
+<h3 id="fantasy-梦幻字体族">fantasy 梦幻字体族</h3>
+<p>特点：</p>
+<ul>
+<li>
+<p>艺术字，主要用于图片，页面上用的少<br>
+示例：</p>
+</li>
+<li>
+<p>WingDings、WingDings 2、WingDings 3、Symbol</p>
+</li>
+<li>
+<p>萝卜体</p>
+</li>
+</ul>
+<h3 id="monospace-等宽字体族">monospace 等宽字体族</h3>
+<p>特点：</p>
+<ul>
+<li>
+<p>每个字形都等宽，主要用于英文，中文方块字本来就等宽<br>
+示例：</p>
+</li>
+<li>
+<p>Courier、MS Courier New、Prestige</p>
+</li>
+<li>
+<p>大多数中文字体</p>
+</li>
+</ul>
+<h2 id="四使用原则">四.使用原则</h2>
+<p>常识：</p>
+<ul>
+<li>
+<p>一个页面上不要用3，4种甚至更多字体</p>
+</li>
+<li>
+<p>如非必要，不要在句中改变字体</p>
+</li>
+<li>
+<p>sans-serif用于在线媒体，serif用于打印设备</p>
+</li>
+<li>
+<p>monospace用于打字机和代码</p>
+</li>
+<li>
+<p>小字号场景不要用sans-serif，衬线字体更容易辨认</p>
+</li>
+</ul>
+<p>最佳实践：</p>
+<ul>
+<li>sans-serif是页面首选，无衬线</li>
+</ul>
+<p>因为在屏幕显示设备上，衬线会让文字变得难以辨认</p>
+<ul>
+<li>serif不适合在线阅读，但打印效果很好，适用于页面打印版</li>
+</ul>
+<p>衬线字体在打印的场景更容易阅读，让人更容易清楚区分不同字母。打印机对分辨率的要求更精细（355ppi），高分辨率下细节显示得很清楚，而不会像屏幕显示一样出现模糊</p>
+<ul>
+<li>monospace用作代码示例</li>
+</ul>
+<p>每个字符等宽，在页面上占据相同的空间，打字机就用这种字体</p>
+<ul>
+<li>正文不要用fantasy和cursive</li>
+</ul>
+<p>可以用在图片或者标题栏里</p>
+<h3 id="写在最后">写在最后</h3>
+<h2 id="ppt不要用宋体不是瞎说的">PPT不要用宋体，不是瞎说的</h2>
+<p>转载原地址：<a href="https://www.cnblogs.com/shangsi/articles/12212792.html">https://www.cnblogs.com/shangsi/articles/12212792.html</a></p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://chenmi.online/blog/post/ptototype/" class="post-title gt-a-link">
+                    轻松理解JS中的面向对象，顺便搞懂prototype和__proto__
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+<script>
+    // md5.min.js
+    !function(n){
+        "use strict";
+        function d(n,t){var r=(65535&n)+(65535&t);return(n>>16)+(t>>16)+(r>>16)<<16|65535&r}
+        function f(n,t,r,e,o,u){return d((c=d(d(t,n),d(e,u)))<<(f=o)|c>>>32-f,r);var c,f}
+        function l(n,t,r,e,o,u,c){return f(t&r|~t&e,n,t,o,u,c)}
+        function v(n,t,r,e,o,u,c){return f(t&e|r&~e,n,t,o,u,c)}
+        function g(n,t,r,e,o,u,c){return f(t^r^e,n,t,o,u,c)}
+        function m(n,t,r,e,o,u,c){return f(r^(t|~e),n,t,o,u,c)}
+        function i(n,t){var r,e,o,u,c;n[t>>5]|=128<<t%32,n[14+(t+64>>>9<<4)]=t;var f=1732584193,i=-271733879,a=-1732584194,h=271733878;for(r=0;r<n.length;r+=16)f=l(e=f,o=i,u=a,c=h,n[r],7,-680876936),h=l(h,f,i,a,n[r+1],12,-389564586),a=l(a,h,f,i,n[r+2],17,606105819),i=l(i,a,h,f,n[r+3],22,-1044525330),f=l(f,i,a,h,n[r+4],7,-176418897),h=l(h,f,i,a,n[r+5],12,1200080426),a=l(a,h,f,i,n[r+6],17,-1473231341),i=l(i,a,h,f,n[r+7],22,-45705983),f=l(f,i,a,h,n[r+8],7,1770035416),h=l(h,f,i,a,n[r+9],12,-1958414417),a=l(a,h,f,i,n[r+10],17,-42063),i=l(i,a,h,f,n[r+11],22,-1990404162),f=l(f,i,a,h,n[r+12],7,1804603682),h=l(h,f,i,a,n[r+13],12,-40341101),a=l(a,h,f,i,n[r+14],17,-1502002290),f=v(f,i=l(i,a,h,f,n[r+15],22,1236535329),a,h,n[r+1],5,-165796510),h=v(h,f,i,a,n[r+6],9,-1069501632),a=v(a,h,f,i,n[r+11],14,643717713),i=v(i,a,h,f,n[r],20,-373897302),f=v(f,i,a,h,n[r+5],5,-701558691),h=v(h,f,i,a,n[r+10],9,38016083),a=v(a,h,f,i,n[r+15],14,-660478335),i=v(i,a,h,f,n[r+4],20,-405537848),f=v(f,i,a,h,n[r+9],5,568446438),h=v(h,f,i,a,n[r+14],9,-1019803690),a=v(a,h,f,i,n[r+3],14,-187363961),i=v(i,a,h,f,n[r+8],20,1163531501),f=v(f,i,a,h,n[r+13],5,-1444681467),h=v(h,f,i,a,n[r+2],9,-51403784),a=v(a,h,f,i,n[r+7],14,1735328473),f=g(f,i=v(i,a,h,f,n[r+12],20,-1926607734),a,h,n[r+5],4,-378558),h=g(h,f,i,a,n[r+8],11,-2022574463),a=g(a,h,f,i,n[r+11],16,1839030562),i=g(i,a,h,f,n[r+14],23,-35309556),f=g(f,i,a,h,n[r+1],4,-1530992060),h=g(h,f,i,a,n[r+4],11,1272893353),a=g(a,h,f,i,n[r+7],16,-155497632),i=g(i,a,h,f,n[r+10],23,-1094730640),f=g(f,i,a,h,n[r+13],4,681279174),h=g(h,f,i,a,n[r],11,-358537222),a=g(a,h,f,i,n[r+3],16,-722521979),i=g(i,a,h,f,n[r+6],23,76029189),f=g(f,i,a,h,n[r+9],4,-640364487),h=g(h,f,i,a,n[r+12],11,-421815835),a=g(a,h,f,i,n[r+15],16,530742520),f=m(f,i=g(i,a,h,f,n[r+2],23,-995338651),a,h,n[r],6,-198630844),h=m(h,f,i,a,n[r+7],10,1126891415),a=m(a,h,f,i,n[r+14],15,-1416354905),i=m(i,a,h,f,n[r+5],21,-57434055),f=m(f,i,a,h,n[r+12],6,1700485571),h=m(h,f,i,a,n[r+3],10,-1894986606),a=m(a,h,f,i,n[r+10],15,-1051523),i=m(i,a,h,f,n[r+1],21,-2054922799),f=m(f,i,a,h,n[r+8],6,1873313359),h=m(h,f,i,a,n[r+15],10,-30611744),a=m(a,h,f,i,n[r+6],15,-1560198380),i=m(i,a,h,f,n[r+13],21,1309151649),f=m(f,i,a,h,n[r+4],6,-145523070),h=m(h,f,i,a,n[r+11],10,-1120210379),a=m(a,h,f,i,n[r+2],15,718787259),i=m(i,a,h,f,n[r+9],21,-343485551),f=d(f,e),i=d(i,o),a=d(a,u),h=d(h,c);return[f,i,a,h]}
+        function a(n){var t,r="",e=32*n.length;for(t=0;t<e;t+=8)r+=String.fromCharCode(n[t>>5]>>>t%32&255);return r}
+        function h(n){var t,r=[];for(r[(n.length>>2)-1]=void 0,t=0;t<r.length;t+=1)r[t]=0;var e=8*n.length;for(t=0;t<e;t+=8)r[t>>5]|=(255&n.charCodeAt(t/8))<<t%32;return r}
+        function e(n){var t,r,e="0123456789abcdef",o="";for(r=0;r<n.length;r+=1)t=n.charCodeAt(r),o+=e.charAt(t>>>4&15)+e.charAt(15&t);return o}
+        function r(n){return unescape(encodeURIComponent(n))}
+        function o(n){return a(i(h(t=r(n)),8*t.length));var t}
+        function u(n,t){return function(n,t){var r,e,o=h(n),u=[],c=[];for(u[15]=c[15]=void 0,16<o.length&&(o=i(o,8*n.length)),r=0;r<16;r+=1)u[r]=909522486^o[r],c[r]=1549556828^o[r];return e=i(u.concat(h(t)),512+8*t.length),a(i(c.concat(e),640))}(r(n),r(t))}
+        function t(n,t,r){return t?r?u(t,n):e(u(t,n)):r?o(n):e(o(n))}
+        "function"==typeof define&&define.amd?define(function(){return t}):"object"==typeof module&&module.exports?module.exports=t:n.md5=t;
+    }(this);
+</script>
+
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '92f9295dc818f5b2020c',
+    clientSecret: '400db341248f8ef795e703eb63388fb57c175248',
+    repo: 'blog',
+    owner: 'Your-songs-are-so-good',
+    admin: ['Your-songs-are-so-good'],
+    id: md5(location.pathname),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false       // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">个人博客</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/Your-songs-are-so-good" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://chenmi.online/blog//atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>笔记 | 晨米酱的Blog</title>
+
+<link rel="shortcut icon" href="https://chenmi.online/blog//favicon.ico?v=1656904005355">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://chenmi.online/blog//styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+
+<script href="https://chenmi.online/blog//js/main.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg navbar-fixed">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/blog/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            晨米酱的Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/archives" class="menu gt-a-link">
+                            动态
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/blog/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1656904005355" action="/blog/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+        <div class="current-tag-container">
+            <h2 class="title gt-c-content-color-first">
+                #笔记
+            </h2>
+        </div>
+        <div class="post-list-container">
+    <div class="post-inner">
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://chenmi.online/blog/post/20220704/">
+                            <span class="post-title gt-c-content-color-first">有关 Date 的解析</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <p>javascript的 Date 参考了早期 java.utils.Date，但是自身提供的api接口不是很多，实际使用时需要自己进行封装或者使用现成的时间库</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-07-04 ·
+                        </time>
+                        
+                            <a href="https://chenmi.online/blog/tag/note/" class="post-tag">
+                                # 笔记
+                            </a>
+                        
+                            <a href="https://chenmi.online/blog/tag/JavaScript/" class="post-tag">
+                                # JavaScript
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://chenmi.online/blog/post/20220702/">
+                            <span class="post-title gt-c-content-color-first">在 Webpack 写一个 Loader</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <h2 id="前言">前言</h2>
+<p>有的时候，你可能在从零搭建 <code>Webpack</code> 项目很熟悉，配置过各种 <code>loader</code> ，面试官在 <code>Webpack</code> 方面问你，是否自己实现过一个<code>loader</code> ？如果没有去了解过如果去实现，确实有点尴尬，其实呢，<code>loader</code> 实现其实很简单的。下面说下 <code>loader</code> 是什么？</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-07-02 ·
+                        </time>
+                        
+                            <a href="https://chenmi.online/blog/tag/G8-LvBq6Z/" class="post-tag">
+                                # Webpack
+                            </a>
+                        
+                            <a href="https://chenmi.online/blog/tag/note/" class="post-tag">
+                                # 笔记
+                            </a>
+                        
+                            <a href="https://chenmi.online/blog/tag/reprint/" class="post-tag">
+                                # 转载
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://chenmi.online/blog/post/20220629/">
+                            <span class="post-title gt-c-content-color-first">如何在 HTML 中使用 Preload 和 Prefetch 来加载资源</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-06-29 ·
+                        </time>
+                        
+                            <a href="https://chenmi.online/blog/tag/fanyi/" class="post-tag">
+                                # 翻译
+                            </a>
+                        
+                            <a href="https://chenmi.online/blog/tag/note/" class="post-tag">
+                                # 笔记
+                            </a>
+                        
+                    </div>
+                </div>
+                
+                    <a href="https://chenmi.online/blog/post/20220629/" class="post-feature-image"
+                       style="background-image: url('https://chenmi.online/blog//post-images/20220629.jpeg')">
+                    </a>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://chenmi.online/blog/post/2022062202/">
+                            <span class="post-title gt-c-content-color-first">webpack -- 版本5配置</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <p>下面是一个完整的<code>webpack.config.js</code>配置案例</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-06-22 ·
+                        </time>
+                        
+                            <a href="https://chenmi.online/blog/tag/G8-LvBq6Z/" class="post-tag">
+                                # Webpack
+                            </a>
+                        
+                            <a href="https://chenmi.online/blog/tag/note/" class="post-tag">
+                                # 笔记
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://chenmi.online/blog/post/2022062201/">
+                            <span class="post-title gt-c-content-color-first">webpack -- 版本4配置</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <p>下面是一个完整的<code>webpack.config.js</code>配置案例</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-06-22 ·
+                        </time>
+                        
+                            <a href="https://chenmi.online/blog/tag/G8-LvBq6Z/" class="post-tag">
+                                # Webpack
+                            </a>
+                        
+                            <a href="https://chenmi.online/blog/tag/note/" class="post-tag">
+                                # 笔记
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://chenmi.online/blog/post/20220622/">
+                            <span class="post-title gt-c-content-color-first">webpack -- 初识</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <p>webpack定义：前端工程的打包构建工具</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-06-22 ·
+                        </time>
+                        
+                            <a href="https://chenmi.online/blog/tag/G8-LvBq6Z/" class="post-tag">
+                                # Webpack
+                            </a>
+                        
+                            <a href="https://chenmi.online/blog/tag/note/" class="post-tag">
+                                # 笔记
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+    </div>
+</div>
+        <div class="pagination-container">
+    
+    
+        <a href="https://chenmi.online/blog/tag/note/page/2" class="prev-page gt-a-link">下一页</a>
+    
+</div>
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">个人博客</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/Your-songs-are-so-good" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://chenmi.online/blog//atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>
